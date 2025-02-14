@@ -3,6 +3,14 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4 mt-5">پروژه در دست ساخت است. لطفا منتظر بمانید.</h1>
+    <h1 class="display-5 mt-5">پروژه در دست ساخت است. لطفا منتظر بمانید.</h1>
+   @if(User.Identity.IsAuthenticated)
+   {
+    <h4 class="display-5 mt-3" style="color:burlywood">Is Authenticated: @User.Identity.IsAuthenticated</h4>
+    <h2 class="display-5 mt-3" style="color:lightcoral">@User.Identity.Name</h2>
+    <h2 class="display-5 mt-3" style="color:green">
+        @User.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value</h2>
+    <h2 class="display-5 mt-3" style="color:darkcyan">@User.Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value</h2>
+   }
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>

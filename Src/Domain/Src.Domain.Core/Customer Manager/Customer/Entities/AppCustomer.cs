@@ -12,6 +12,7 @@ namespace Src.Domain.Core.Customer_Manager.Customer.Entities
 {
     public class AppCustomer : User
     {
+       
         public List<AppRequest>? Requests { get; set; }
         public List<FeedBack>? FeedBacks { get; set; }
     }

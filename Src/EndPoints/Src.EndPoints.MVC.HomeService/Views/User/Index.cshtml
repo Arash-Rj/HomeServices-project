@@ -1,4 +1,17 @@
-﻿@if (TempData["SuccessMessage"] is not null)
+﻿
+@if(User.Identity.IsAuthenticated)
+{
+    <div class="text-center">
+        <h4 class="display-5 mt-3" style="color:burlywood">Is Authenticated: @User.Identity.IsAuthenticated</h4>
+        <h2 class="display-5 mt-3" style="color:lightcoral">@User.Identity.Name</h2>
+        <h2 class="display-5 mt-3" style="color:green">
+            @User.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value
+        </h2>
+        <h2 class="display-5 mt-3" style="color:darkcyan">@User.Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value</h2>
+
+    </div>
+}
+@if (TempData["SuccessMessage"] is not null)
 {
     <div id="alertbox" class="alert alert-success" role="alert">@TempData["SuccessMessage"]</div>
 }
