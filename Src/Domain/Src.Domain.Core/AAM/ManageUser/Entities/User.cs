@@ -16,7 +16,6 @@ namespace Src.Domain.Core.AAM.ManageUser.Entities
     {
         //public string? Biography { get; set; }
         public string? CardNumber { get; set; }
-        public string? Address { get; set; }
         public float Balance { get; set; }   
         public ProvinceEnum Province { get; set; }
         public DateTime RegisterDate { get; set; }

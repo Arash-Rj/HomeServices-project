@@ -12,7 +12,7 @@ namespace Src.Domain.Core.Customer_Manager.Customer.Entities
 {
     public class AppCustomer : User
     {
-       
+        public string? Address { get; set; }
         public List<AppRequest>? Requests { get; set; }
         public List<FeedBack>? FeedBacks { get; set; }
     }
