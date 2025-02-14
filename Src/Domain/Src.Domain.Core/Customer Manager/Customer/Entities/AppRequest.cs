@@ -1,6 +1,7 @@
 ﻿using Src.Domain.Core.Base.Entities;
 using Src.Domain.Core.Customer_Manager.Customer.Enums;
 using Src.Domain.Core.Expert_Manager.Expert.Entities;
+using Src.Domain.Core.HomeServices_Manager.HomeServices.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,6 @@ namespace Src.Domain.Core.Customer_Manager.Customer.Entities
     {
         public int Id { get; set; }
         public string Details { get; set; }
-        public string HomeServiceTitle { get; set; }
         public bool IsActive { get; set; }
         public DateOnly RequestDate { get; set; }
         public DateOnly ExecutionDate { get; set; }
@@ -21,6 +21,8 @@ namespace Src.Domain.Core.Customer_Manager.Customer.Entities
         public ReqStatus Status { get; set; }
         public int CustomerId { get; set; }
         public AppCustomer Customer { get; set; }
+        public int HomeServiceId { get; set; }
+        public HomeService HomeService { get; set; }
         public List<Proposal> Proposals { get; set; }   
         public List<Image> Images { get; set; }
     }

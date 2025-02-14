@@ -22,7 +22,7 @@ namespace Src.Infra.DataBase.SqlServer.Ef.Configuration
                 .HasForeignKey(p => p.ExpertId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Property(p => p.Status).HasConversion<string>();
+           
         }
     }
 }

@@ -10,7 +10,6 @@ namespace Src.Domain.Core.Expert_Manager.Expert.Entities
     public class FeedBack
     {
         public int Id { get; set; }
-        public string From { get; set; }
         public string Description { get; set; }
         public int Score { get; set; }
         public int ExpertId { get; set; }

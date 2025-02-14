@@ -14,10 +14,8 @@ namespace Src.Domain.Core.Payment_Manager.Payment.Entities
         public int Id { get; set; }
         public DateTime TransactionDate { get; set; }
         public float Amount { get; set; }
-        public string CustomerName { get; set; }
         public int CustomerId { get; set; }
         public AppCustomer Customer { get; set; }
-        public string ExpertName { get; set; }
         public int ExpertId { get; set; }
         public AppExpert Expert { get; set; }
         public int AdminId { get; set; }

@@ -15,9 +15,6 @@ namespace Src.Infra.DataBase.SqlServer.Ef.Configuration
         {
             builder.HasKey(x => x.Id);
 
-            builder.Property(p => p.CustomerName).HasMaxLength(30);
-            builder.Property(p => p.ExpertName).HasMaxLength(30);
-
             builder.HasOne(p => p.Expert)
                 .WithMany(e => e.Payments)
                 .HasForeignKey(p => p.ExpertId)

@@ -26,7 +26,7 @@ namespace Src.Infra.DataBase.SqlServer.Ef.Configuration
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Property(r => r.Status).HasConversion<string>();
+           
         }
     }
 }

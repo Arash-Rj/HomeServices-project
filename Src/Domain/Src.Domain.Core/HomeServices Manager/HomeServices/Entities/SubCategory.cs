@@ -1,4 +1,5 @@
 ﻿using Src.Domain.Core.Base.Entities;
+using Src.Domain.Core.Expert_Manager.Expert.Entities;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Enums;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,10 @@ namespace Src.Domain.Core.HomeServices_Manager.HomeServices.Entities
     public class SubCategory
     {
         public int Id { get; set; }
-        public SubCategoryEnum Title { get; set; }
+        public string Title { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+        public List<AppExpert> AppExperts { get; set; }
         public List<HomeService> HomeServices { get; set; }
         public string ImagePath { get; set; }
     }

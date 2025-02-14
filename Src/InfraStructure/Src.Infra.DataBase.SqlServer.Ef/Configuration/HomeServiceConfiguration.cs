@@ -23,8 +23,7 @@ namespace Src.Infra.DataBase.SqlServer.Ef.Configuration
             builder.Property(h => h.Title).HasMaxLength(30);
 
             builder.Property(h => h.Description).HasMaxLength(100);
-
-            builder.Property(h => h.Status).HasConversion<string>();
+         
         }
     }
 }

@@ -21,7 +21,9 @@ namespace Src.Infra.DataBase.SqlServer.Ef.Configuration
                 .HasForeignKey(s => s.CategoryId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Property(s => s.Title).HasConversion<string>(); 
+            builder.HasMany(s => s.AppExperts).WithMany(e => e.Specialties);
+
+             
 
             //builder.HasData(new List<SubCategory>()
             //{
