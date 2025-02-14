@@ -1,0 +1,20 @@
+﻿using Src.Domain.Core.Base.Entities;
+using Src.Domain.Core.HomeServices_Manager.HomeServices.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Src.Domain.Core.HomeServices_Manager.HomeServices.Entities
+{
+    public class SubCategory
+    {
+        public int Id { get; set; }
+        public SubCategoryEnum Title { get; set; }
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
+        public List<HomeService> HomeServices { get; set; }
+        public string ImagePath { get; set; }
+    }
+}
