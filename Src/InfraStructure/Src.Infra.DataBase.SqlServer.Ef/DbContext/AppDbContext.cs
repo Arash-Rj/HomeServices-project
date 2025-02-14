@@ -49,5 +49,7 @@ namespace Src.Infra.DataBase.SqlServer.Ef.DbContext
         public DbSet<HomeService> HomeServices { get; set; }
         public DbSet<AppPayment> Payments { get; set; }
         public DbSet<FeedBack> FeedBacks { get; set; }
+        public DbSet<AppExpert> AppExperts { get; set; }
+        public DbSet<AppCustomer> AppCustomers { get; set; }
     }
 }

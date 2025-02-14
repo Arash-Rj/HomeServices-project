@@ -35,7 +35,6 @@ namespace Src.Infra.DataBase.SqlServer.Ef.Configuration
                     Province=ProvinceEnum.گلستان,
                     RegisterDate=DateTime.Now,
                     Balance=0,
-                    Address="Defult"
                 }
              };
             foreach (var admin in admins)
@@ -89,7 +88,6 @@ namespace Src.Infra.DataBase.SqlServer.Ef.Configuration
                     Province=ProvinceEnum.کرج,
                     RegisterDate=DateTime.Now,
                     Balance=10000000,
-                    Address="Karaj"
                 }
              };
             foreach (var expert in experts)
