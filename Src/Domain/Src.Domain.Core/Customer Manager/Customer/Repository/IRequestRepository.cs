@@ -1,4 +1,5 @@
 ﻿using Src.Domain.Core.Base.Entities;
+using Src.Domain.Core.Customer_Manager.Customer.Dtos;
 using Src.Domain.Core.Customer_Manager.Customer.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,10 @@ namespace Src.Domain.Core.Customer_Manager.Customer.Repository
 {
     public interface IRequestRepository
     {
-        public Task<Result> Create(AppRequest objct, CancellationToken cancellationToken);
-        public Task<Result> Delete(AppRequest objct, CancellationToken cancellationToken);
-        public Task<AppRequest> Get(int id, CancellationToken cancellationToken);
-        public Task<List<AppRequest>> GetAll(CancellationToken cancellationToken);
-        public Task<Result> Update(AppRequest objct, CancellationToken cancellationToken);
+        public Task<Result> Create(CreateRequestDto objct, CancellationToken cancellationToken);
+        public Task<Result> Delete(int id, CancellationToken cancellationToken);
+        public Task<RequestInfoDto>? Get(int id, CancellationToken cancellationToken);
+        public Task<List<RequestInfoDto>>? GetAll(CancellationToken cancellationToken);
+        public Task<Result> Update(RequestInfoDto objct, CancellationToken cancellationToken);
     }
 }
