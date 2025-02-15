@@ -1,4 +1,5 @@
 ﻿using Src.Domain.Core.Base.Entities;
+using Src.Domain.Core.HomeServices_Manager.HomeServices;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Entities;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Repository;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Service;
@@ -18,32 +19,64 @@ namespace Src.Domain.Service.HomeServices_Manager.HomeService
         {
             _homeServiceRepository = homeServiceRepository;
         }
-        public Result Add(Core.HomeServices_Manager.HomeServices.Entities.HomeService homeServiceD)
+
+        public async Task<Result> Add(HomeServiceDto objct, CancellationToken cancellationToken)
+        {
+            return await _homeServiceRepository.Create(objct, cancellationToken);
+        }
+
+        public async Task<Result> Delete(int id, CancellationToken cancellationToken)
+        {
+            return await _homeServiceRepository.Delete(id, cancellationToken);
+        }
+
+        public async Task<List<HomeServiceDto>?> GetAllInfo(CancellationToken cancellationToken)
+        {
+            var homeservicedtos = new List<HomeServiceDto>();
+            try
+            {
+               homeservicedtos = await _homeServiceRepository.GetAllInfo(cancellationToken);
+                if(homeservicedtos is null)
+                {
+                    return null;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            return homeservicedtos;
+        }
+
+        public async Task<HomeServiceDto?> GetInfo(int id, CancellationToken cancellationToken)
+        {
+            var homeservicedto = new HomeServiceDto();
+            try
+            {
+                homeservicedto = await _homeServiceRepository.GetInfo(id,cancellationToken);
+                if (homeservicedto is null)
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return homeservicedto;
+        }
+
+        public List<SubCategory> SubCategories(CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public List<Category> Categories()
+        public Task<Result> Update(HomeServiceDto objct, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return _homeServiceRepository.Update(objct, cancellationToken);
         }
 
-        public List<HomeServiceDto> HomeServices()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<SubCategory> SubCategories()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Result Update(Core.HomeServices_Manager.HomeServices.Entities.HomeService homeService)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Result Validation(Core.HomeServices_Manager.HomeServices.Entities.HomeService homeService)
+        public Task<Result> Validation(Core.HomeServices_Manager.HomeServices.Entities.HomeService objct, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

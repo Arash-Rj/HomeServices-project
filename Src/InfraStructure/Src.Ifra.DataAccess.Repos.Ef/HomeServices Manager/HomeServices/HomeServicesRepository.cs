@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Src.Domain.Core.Base.Entities;
+using Src.Domain.Core.Expert_Manager.Expert.Dtos;
 using Src.Domain.Core.HomeServices_Manager.HomeServices;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Entities;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Repository;
@@ -43,7 +44,24 @@ namespace Src.Ifra.DataAccess.Repos.Ef.HomeServices_Manager.HomeServices
             return new Result(true, "ثبت سرویس خانه با موفقیت انجام شد.");
         }
 
-        public async Task<List<HomeServiceDto>>? GetAllInfo(CancellationToken cancellationToken)
+        public async Task<Result> Delete(int id, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var service = _appDbContext.HomeServices.FirstOrDefault(x => x.Id == id);
+                if (service == null)
+                    return new Result(false, "سرویس خانه ای با این ایدی پیدا نشد!");
+                _appDbContext.HomeServices.Remove(service);
+                var res = await _appDbContext.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                return new Result(false, ex.Message);
+            }
+            return new Result(true, "حذف سرویس خانه با موفقیت انجام شد.");
+        }
+
+        public async Task<List<HomeServiceDto>?> GetAllInfo(CancellationToken cancellationToken)
         {
             var homeservicedtos = new List<HomeServiceDto>();
             try
@@ -88,6 +106,45 @@ namespace Src.Ifra.DataAccess.Repos.Ef.HomeServices_Manager.HomeServices
                 return subcategories;
             }
             return subcategories;
+        }
+
+        public async Task<HomeServiceDto?> GetInfo(int id, CancellationToken cancellationToken)
+        {
+            var homeServiceDto = new HomeServiceDto();
+            try
+            {
+                var homeService = await _appDbContext.HomeServices.Select(p =>
+                new {
+                    p.Id,
+                    p.Title,
+                    p.Description,
+                    p.BasePrice,
+                    p.ImagePath,
+                    p.SubCategory.Name,
+                    p.IsActive
+                })
+                    .FirstAsync(u => u.Id.Equals(id), cancellationToken);
+
+                #region Mapping 
+                homeServiceDto.Id = homeService.Id;
+                homeServiceDto.ImagePath = homeService.ImagePath;
+                homeServiceDto.BasePrice = homeService.BasePrice;
+                homeServiceDto.Description = homeService.Description;
+                homeServiceDto.IsActive = homeService.IsActive;
+                homeServiceDto.Title = homeService.Title;
+                homeServiceDto.SubCategoryName = homeService.Name;
+                #endregion
+
+            }
+            catch (NullReferenceException ex)
+            {
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return homeServiceDto;
         }
 
         public async Task<Result> Update(HomeServiceDto homeServicedto, CancellationToken cancellationToken)
