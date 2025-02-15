@@ -40,7 +40,7 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Request
             try
             {
                 await _appDbContext.Requests.AddAsync(request, cancellationToken);
-                var res = _appDbContext.SaveChanges();
+                var res = await _appDbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -66,23 +66,14 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Request
             return new Result(true, "حذف سفارش با موفقیت انجام شد.");
         }
 
-        public async Task<RequestInfoDto>? Get(int id, CancellationToken cancellationToken)
+        public async Task<AppRequest>? Get(int id, CancellationToken cancellationToken)
         {
             var appRequest = new AppRequest();
-            var requestdto = new RequestInfoDto();
             try
             {
-                appRequest = await _appDbContext.Requests.FirstAsync(r => r.Id.Equals(id),cancellationToken);
-
-                #region Mapping
-                requestdto.Id = appRequest.Id;
-                requestdto.ExecutionDate = appRequest.ExecutionDate;
-                requestdto.ExecutionTime = appRequest.ExecutionTime;
-                requestdto.Status = appRequest.Status;
-                requestdto.Details = appRequest.Details;
-                requestdto.Images = appRequest.Images;
-                #endregion
-
+                appRequest = await _appDbContext.Requests.Include(r => r.Customer)
+                    .Include(r => r.HomeService)
+                    .FirstAsync(r => r.Id.Equals(id),cancellationToken);
             }
             catch (NullReferenceException ex)
             {
@@ -92,17 +83,25 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Request
             {
                 throw ex;
             }
-            return requestdto;
+            return appRequest;
         }
 
         public async Task<List<RequestInfoDto>>? GetAll(CancellationToken cancellationToken)
         {
-            var appRequests = new List<AppRequest>();
             var requestdtos = new List<RequestInfoDto>();
             try
             {
-                appRequests = await _appDbContext.Requests.ToListAsync(cancellationToken);
-                foreach (var request in appRequests)
+                var requests = await _appDbContext.Requests
+                    .Select(r => 
+                    new {
+                        r.Id , r.RequestDate , r.ExecutionDate , 
+                        r.Status , r.IsActive , r.Details, 
+                        r.Customer.UserName, r.Images , r.ExecutionTime ,
+                        r.HomeService.Title
+                    })
+                    .ToListAsync(cancellationToken);
+
+                foreach (var request in requests)
                 {
                    requestdtos.Add(
                      new RequestInfoDto
@@ -114,6 +113,8 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Request
                         IsActive = request.IsActive,
                         Status = request.Status,
                         Images = request.Images,
+                        CustomerName = request.UserName,
+                        HomeServiceName = request.UserName,
                      });
                 }
             }

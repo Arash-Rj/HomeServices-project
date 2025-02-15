@@ -12,6 +12,8 @@ namespace Src.Domain.Core.Customer_Manager.Customer.Dtos
     public class RequestInfoDto
     {
         public int Id { get; set; }
+        public string? CustomerName { get; set; }
+        public string? HomeServiceName { get; set; }
         public string Details { get; set; }
         public bool IsActive { get; set; }
         [MaxLength(10)]
