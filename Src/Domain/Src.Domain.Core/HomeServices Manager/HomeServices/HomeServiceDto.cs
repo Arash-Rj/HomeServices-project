@@ -11,10 +11,11 @@ namespace Src.Domain.Core.HomeServices_Manager.HomeServices
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string SubCategoryName { get; set; }
+        public int SubcategoryId { get; set; }
+        public string? SubCategoryName { get; set; }
         public float BasePrice { get; set; }
         public string Description { get; set; }
-        public string ImagePath { get; set; }
+        public string? ImagePath { get; set; }
         public bool IsActive { get; set; }
     }
 }

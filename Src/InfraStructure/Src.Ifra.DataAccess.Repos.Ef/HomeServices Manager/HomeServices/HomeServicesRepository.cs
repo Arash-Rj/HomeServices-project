@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Src.Domain.Core.Base.Entities;
+using Src.Domain.Core.HomeServices_Manager.HomeServices;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Entities;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Repository;
 using Src.Infra.DataBase.SqlServer.Ef.DbContext;
@@ -18,12 +19,22 @@ namespace Src.Ifra.DataAccess.Repos.Ef.HomeServices_Manager.HomeServices
         {
             _appDbContext = appDbContext;
         }
-        public async Task<Result> Create(HomeService homeService, CancellationToken cancellationToken)
+        public async Task<Result> Create(HomeServiceDto homeServicedto, CancellationToken cancellationToken)
         {
+            var homeservice = new HomeService() 
+            {
+                Title = homeServicedto.Title,
+                Description = homeServicedto.Description,
+                BasePrice = homeServicedto.BasePrice,
+                IsActive = true,
+                ImagePath = homeServicedto.ImagePath,
+                SubCategoryId = homeServicedto.SubcategoryId,
+                Views = 1
+            };
             try
             {
-                await _appDbContext.HomeServices.AddAsync(homeService, cancellationToken);
-                var res = _appDbContext.SaveChanges();
+                await _appDbContext.HomeServices.AddAsync(homeservice, cancellationToken);
+                var res = await _appDbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -32,32 +43,37 @@ namespace Src.Ifra.DataAccess.Repos.Ef.HomeServices_Manager.HomeServices
             return new Result(true, "ثبت سرویس خانه با موفقیت انجام شد.");
         }
 
-        public async Task<List<Domain.Core.HomeServices_Manager.HomeServices.Entities.Category>> GetAllCategories(CancellationToken cancellationToken)
+        public async Task<List<HomeServiceDto>>? GetAllInfo(CancellationToken cancellationToken)
         {
-            var categoreis = new List<Domain.Core.HomeServices_Manager.HomeServices.Entities.Category>();
+            var homeservicedtos = new List<HomeServiceDto>();
             try
             {
-                categoreis = await _appDbContext.Categories.ToListAsync(cancellationToken);
+               var homeservices = await _appDbContext.HomeServices.Select(
+                    h => new {h.Id, h.BasePrice, h.ImagePath , h.SubCategory.Name , h.IsActive ,h.Title }
+                    )
+                    .ToListAsync(cancellationToken);
+                foreach ( var homeservice in homeservices )
+                {
+                    homeservicedtos.Add(new HomeServiceDto() 
+                    {
+                        Id = homeservice.Id,
+                        BasePrice = homeservice.BasePrice,
+                        ImagePath = homeservice.ImagePath,
+                        Title = homeservice.Title,
+                        IsActive = homeservice.IsActive,
+                        SubCategoryName = homeservice.Name,                   
+                    });
+                }
+            }
+            catch (NullReferenceException ex)
+            {
+                return null;
             }
             catch (Exception ex)
             {
-                return categoreis;
+                throw ex;
             }
-            return categoreis;
-        }
-
-        public async Task<List<HomeService>> GetAllHomeService(CancellationToken cancellationToken)
-        {
-            var homeservices = new List<HomeService>();
-            try
-            {
-                homeservices = await _appDbContext.HomeServices.ToListAsync(cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                return homeservices;
-            }
-            return homeservices;
+            return homeservicedtos;
         }
 
         public async Task<List<SubCategory>> GetAllSubCategories(CancellationToken cancellationToken)
@@ -74,11 +90,23 @@ namespace Src.Ifra.DataAccess.Repos.Ef.HomeServices_Manager.HomeServices
             return subcategories;
         }
 
-        public async Task<Result> Update(HomeService homeService, CancellationToken cancellationToken)
+        public async Task<Result> Update(HomeServiceDto homeServicedto, CancellationToken cancellationToken)
         {
             try
             {
-                _appDbContext.HomeServices.Update(homeService);
+                var homeservice = await _appDbContext.HomeServices.FirstOrDefaultAsync(h => h.Id == homeServicedto.Id);
+                if (homeservice is null)
+                {
+                    return new Result(false, "سرویس خانه ای با این ایدی یافت نشد!");
+                }
+                #region Mapping
+                homeservice.BasePrice = homeServicedto.BasePrice;
+                homeservice.ImagePath = homeServicedto.ImagePath;
+                homeservice.Title = homeServicedto.Title;
+                homeservice.Description = homeServicedto.Description;
+                homeservice.IsActive = homeServicedto.IsActive;
+                #endregion
+                _appDbContext.HomeServices.Update(homeservice);
                 var res = await _appDbContext.SaveChangesAsync(cancellationToken);
             }
             catch (Exception ex)
