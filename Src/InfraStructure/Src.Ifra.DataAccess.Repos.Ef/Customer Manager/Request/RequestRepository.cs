@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Src.Domain.Core.Base.Entities;
+using Src.Domain.Core.Customer_Manager.Customer.Dtos;
 using Src.Domain.Core.Customer_Manager.Customer.Entities;
 using Src.Domain.Core.Customer_Manager.Customer.Repository;
 using Src.Infra.DataBase.SqlServer.Ef.DbContext;
