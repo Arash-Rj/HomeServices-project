@@ -24,9 +24,6 @@ namespace Src.Infra.DataBase.SqlServer.Ef.DbContext
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<User>().HasKey(x => x.Id);
-            builder.Entity<User>().Property(u => u.PhoneNumber).HasMaxLength(11);
-
             builder.ApplyConfiguration(new CategoryConfiguration());
             builder.ApplyConfiguration(new FeedBackConfiguration());
             builder.ApplyConfiguration(new HomeServiceConfiguration());
@@ -35,7 +32,9 @@ namespace Src.Infra.DataBase.SqlServer.Ef.DbContext
             builder.ApplyConfiguration(new RequestConfiguration());
             builder.ApplyConfiguration(new SubCategoryConfiguration());
             builder.ApplyConfiguration(new PaymentConfiguration());
+
             UserConfiguration.SeedUser(builder);
+            UserConfiguration.ConfigureUser(builder);
         }
         public DbSet<AppRequest> Requests { get; set; }
         public DbSet<Proposal> Proposals { get; set; }

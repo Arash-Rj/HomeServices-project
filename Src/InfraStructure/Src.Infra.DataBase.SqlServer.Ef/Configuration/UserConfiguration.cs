@@ -35,6 +35,7 @@ namespace Src.Infra.DataBase.SqlServer.Ef.Configuration
                     Province=ProvinceEnum.گلستان,
                     RegisterDate=DateTime.Now,
                     Balance=0,
+                    IsActive=true,
                 }
              };
             foreach (var admin in admins)
@@ -61,7 +62,8 @@ namespace Src.Infra.DataBase.SqlServer.Ef.Configuration
                     Province=ProvinceEnum.گلستان,
                     RegisterDate=DateTime.Now,
                     Balance=10000000,
-                    Address="Gonbad-Kavoos"
+                    Address="Gonbad-Kavoos",
+                    IsActive=true,
                 }
              };
             foreach (var customer in customers)
@@ -88,6 +90,8 @@ namespace Src.Infra.DataBase.SqlServer.Ef.Configuration
                     Province=ProvinceEnum.کرج,
                     RegisterDate=DateTime.Now,
                     Balance=10000000,
+                    WorkPlaceAddress="عظیمیه-میدان اسبی-پارک",
+                    IsActive=true,
                 }
              };
             foreach (var expert in experts)
@@ -110,6 +114,17 @@ namespace Src.Infra.DataBase.SqlServer.Ef.Configuration
                 new IdentityUserRole<int>() { RoleId = 2, UserId = 2 },
                 new IdentityUserRole<int>() { RoleId = 3, UserId = 3 }
             );
+        }
+
+        public static void ConfigureUser(ModelBuilder builder)
+        {
+            builder.Entity<User>().HasKey(x => x.Id);
+            builder.Entity<User>().Property(u => u.PhoneNumber).HasMaxLength(11);
+            builder.Entity<AppExpert>().Property(e => e.WorkPlaceAddress).HasMaxLength(40);
+            builder.Entity<AppCustomer>().Property(c => c.Address).HasMaxLength(60);
+            builder.Entity<AppExpert>().ToTable("Experts");
+            builder.Entity<AppCustomer>().ToTable("Customers");
+            builder.Entity<Admin>().ToTable("Admin");
         }
     }
 }
