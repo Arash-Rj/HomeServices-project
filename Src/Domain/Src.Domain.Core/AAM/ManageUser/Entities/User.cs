@@ -18,7 +18,7 @@ namespace Src.Domain.Core.AAM.ManageUser.Entities
         public float Balance { get; set; }   
         public ProvinceEnum Province { get; set; }
         public DateTime RegisterDate { get; set; }
-        //public bool IsActive { get; set; }
+        public bool IsActive { get; set; }
         public string? ImagePath { get; set; }
         public List<AppPayment>? Payments { get; set; }
     }

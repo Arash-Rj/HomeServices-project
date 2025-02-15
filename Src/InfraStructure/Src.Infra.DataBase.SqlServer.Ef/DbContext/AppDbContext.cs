@@ -25,11 +25,6 @@ namespace Src.Infra.DataBase.SqlServer.Ef.DbContext
             base.OnModelCreating(builder);
 
             builder.Entity<User>().HasKey(x => x.Id);
-            builder.Entity<User>().Property(u => u.Province).HasConversion<string>();
-            builder.Entity<User>().HasDiscriminator<string>("UserType")
-                .HasValue<AppCustomer>("Customer")
-                .HasValue<AppExpert>("Expert")
-                .HasValue<Admin>("Admin");
             builder.Entity<User>().Property(u => u.PhoneNumber).HasMaxLength(11);
 
             builder.ApplyConfiguration(new CategoryConfiguration());
@@ -51,5 +46,6 @@ namespace Src.Infra.DataBase.SqlServer.Ef.DbContext
         public DbSet<FeedBack> FeedBacks { get; set; }
         public DbSet<AppExpert> AppExperts { get; set; }
         public DbSet<AppCustomer> AppCustomers { get; set; }
+        public DbSet<Admin> Admins { get; set; }
     }
 }
