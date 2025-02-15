@@ -19,7 +19,7 @@ namespace Src.Domain.Core.HomeServices_Manager.HomeServices.Entities
         public string ImagePath { get; set; }
         public int  Views { get; set; }
         public float BasePrice { get; set; }
-        public HomeServiceStatus Status { get; set; }
+        public bool IsActive { get; set; }
         public List<AppRequest> Requests { get; set; }
     }
 }

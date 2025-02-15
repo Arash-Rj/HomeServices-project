@@ -2,6 +2,7 @@
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Entities;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Repository;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Service;
+using Src.Ifra.DataAccess.Repos.Ef.HomeServices_Manager.HomeServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,11 @@ namespace Src.Domain.Service.HomeServices_Manager.HomeService
 {
     public class HomeServicesService : IHomeServiceService
     {
+        private readonly IHomeServiceRepository _homeServiceRepository;
+        public HomeServicesService(IHomeServiceRepository homeServiceRepository)
+        {
+            _homeServiceRepository = homeServiceRepository;
+        }
         public Result Add(Core.HomeServices_Manager.HomeServices.Entities.HomeService homeServiceD)
         {
             throw new NotImplementedException();
