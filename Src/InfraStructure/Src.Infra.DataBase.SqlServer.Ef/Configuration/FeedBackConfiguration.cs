@@ -26,6 +26,16 @@ namespace Src.Infra.DataBase.SqlServer.Ef.Configuration
                  .WithMany(c => c.FeedBacks)
                  .HasForeignKey(f => f.CustomerId)
                  .OnDelete(DeleteBehavior.NoAction);
+            builder.HasData(
+                new FeedBack()
+                {
+                    Id = 1,
+                    CustomerId = 2,
+                    ExpertId = 3,
+                    Description ="کار خیلی عالی و سر وقت انجام شد",
+                    Score = 5,
+                }
+                );
         } 
     }
 }

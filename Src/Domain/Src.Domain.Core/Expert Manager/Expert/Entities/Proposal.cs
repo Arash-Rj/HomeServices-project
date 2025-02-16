@@ -14,10 +14,9 @@ namespace Src.Domain.Core.Expert_Manager.Expert.Entities
         public int Id { get; set; }
         public string Description { get; set; }
         public float Price { get; set; }
-        [MaxLength(10)]
-        public string ProposalDate { get; set; }
-        [MaxLength(10)]
-        public string DueDate { get; set; }
+        public DateTime ProposalDate { get; set; }
+        public DateOnly DueDate { get; set; }
+        public TimeOnly DueTime { get; set; }
         public ProposalStatus Status { get; set; }
         public int RequestId { get; set; }
         public AppRequest Request { get; set; }

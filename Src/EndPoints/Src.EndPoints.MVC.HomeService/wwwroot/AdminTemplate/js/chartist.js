@@ -271,7 +271,7 @@
 
         // Line Chart 3 Starts
         var lineChart3 = new Chartist.Line('#line-chart3', {
-            labels: ["تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر"],
+            labels: ["1", "2", "3", "4 ", "5 ", "6", "7"],
             series: [
                 [12, 9, 7, 4, 5, 6, 6],
                 [2, 1, 10, 7, 3, 7, 2],
@@ -421,7 +421,7 @@
 
         //  Distributed Series Bar Chart Starts
         var distributedSeriesBarChart = new Chartist.Bar('#distributed-bar-chart', {
-            labels: ["اول", "دوم", "سوم", "چهارم", "پنجم", "ششم", "هفتم"],
+            labels: ["1", "2", "3", "4", "5", "6", "7"],
             series: [50, 70, 120, 200, 180, 120, 150]
         },
             {

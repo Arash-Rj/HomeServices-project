@@ -13,10 +13,8 @@ namespace Src.Domain.Core.Customer_Manager.Customer.Dtos
     {
         public int Id { get; set; }
         public string Details { get; set; }
-        [MaxLength(10)]
-        public string ExecutionDate { get; set; }
-        [MaxLength(5)]
-        public string ExecutionTime { get; set; }
+        public DateOnly ExecutionDate { get; set; }
+        public TimeOnly ExecutionTime { get; set; }
         public int CustomerId { get; set; }
         public int HomeServiceId { get; set; }
         public List<Image> Images { get; set; }

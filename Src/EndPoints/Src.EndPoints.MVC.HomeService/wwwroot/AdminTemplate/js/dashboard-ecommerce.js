@@ -229,7 +229,7 @@
 
         // Line with Area Chart Starts
         var lineArea = new Chartist.Line('#line-chart', {
-            labels: ["یک", "دو", "سه", "چهار", "پنج", "شش", "هفت", "هشت"],
+            labels: ["1", "2", "3", "4", "5", "6", "7", "8"],
             series: [
                 [0, 4500, 2600, 6100, 2600, 6500, 3200, 6800],
             ]
@@ -288,7 +288,7 @@
 
         // Stack bar Chart Starts
         var Stackbarchart = new Chartist.Bar('#Stack-bar-chart', {
-            labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+            labels: ["1", "2", "3", "5", "5", "6", "7", "8", "9", "10", "11", "12"],
             series: [
                 [7, 4, 2, -2, -4, -7, -7, -4, -2, 2, 4, 7]
             ]

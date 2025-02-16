@@ -11,8 +11,8 @@ namespace Src.Domain.Core.Expert_Manager.Expert.Dtos
     {
         public string Description { get; set; }
         public float Price { get; set; }
-        [MaxLength(10)]
-        public string DueDate { get; set; }
+        public DateOnly DueDate { get; set; }
+        public TimeOnly DueTime { get; set; }
         public int RequestId { get; set; }
         public int ExpertId { get; set; }
     }

@@ -59,9 +59,9 @@
 
         // Chart Data
         var chartData = {
-            labels: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر"],
+            labels: ["مهر", "آبان", "آذر", "دی", "یهمن", "اسفند", "فروردین"],
             datasets: [{
-                label: "  مجموعه اول من",
+                label: "مجموعه اول من",
                 data: [65, 59, 80, 81, 56, 55, 40],
                 fill: false,
                 // borderDash: [5, 5],
@@ -72,7 +72,7 @@
                 pointHoverBorderWidth: 2,
                 pointRadius: 4,
             }, {
-                label: "مجموعه دوم من",
+                label: "  مجموعه دوم من",
                 data: [28, 48, 40, 19, 86, 27, 90],
                 fill: false,
                 borderDash: [5, 5],
@@ -151,7 +151,7 @@
 
         // Chart Data
         var chartData = {
-            labels: ["تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی"],
+            labels: ["مهر", "آبان", "آذر", "دی", "بهمن", "اسفند", "اردیبهشت"],
             datasets: [{
                 label: "مجموعه اول",
                 data: [0, 150, 140, 105, 210, 140, 270],
@@ -247,7 +247,7 @@
     var chartData = {
         labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
         datasets: [{
-            label: "مجموعه اول",
+            label: "مجمموعه اول",
             data: [65, 59, 80, 81, 56, 55, 40],
             backgroundColor: "rgba(255, 95, 32, 0.8)",
             borderColor: "transparent",
@@ -295,7 +295,7 @@
     var chartData = {
         labels: ['دانلود', 'فروش', 'خریداری شده'],
         datasets: [{
-            label: "اولین مجموعه من",
+            label: "مجموعه اول من",
             data: [350, 450, 100],
             backgroundColor: ["rgba(102, 110, 232, 0.8)", "rgba(30, 159, 242, 0.8)", "rgba(255, 95, 32, 0.8)"],
         }]
@@ -336,14 +336,14 @@
 
         // Chart Data
         var chartData = {
-            labels: ["خوردن", "نوشیدن", "خواب", "طراحی", "کد نویسی", "جرخه", "اجرا"],
+            labels: ["خوردن", "نوشیدن", "خواب", "طراحی", "کد نویسی", "چرخه", "اجرا"],
             datasets: [{
                 label: "مجموعه اول",
                 backgroundColor: "rgba(255, 95, 32, 0.8)",
                 borderColor: "transparent",
                 data: [65, 59, 90, 81, 56, 55, 40],
             }, {
-                label: " مجموعه دوم",
+                label: "مجموعه دوم",
                 backgroundColor: "rgba(102, 110, 232, 0.8)",
                 borderColor: "transparent",
                 data: [28, 48, 40, 19, 96, 27, 100],
@@ -379,7 +379,7 @@
     var chartData = {
         labels: ['دانلود', 'فروش', 'خریداری شده'],
         datasets: [{
-            label: "مجموعه اول من",
+            label: "اولین مجموعه من",
             data: [300, 500, 100],
             backgroundColor: ["rgba(102, 110, 232, 0.8)", "rgba(30, 159, 242, 0.8)", "rgba(255, 95, 32, 0.8)"],
         }]

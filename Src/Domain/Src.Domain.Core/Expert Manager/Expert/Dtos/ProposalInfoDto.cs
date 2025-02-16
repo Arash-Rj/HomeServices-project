@@ -16,9 +16,8 @@ namespace Src.Domain.Core.Expert_Manager.Expert.Dtos
         public string? HomeServiceName { get; set; }
         public ProposalStatus Status { get; set; }
         public float Price { get; set; }
-        [MaxLength(10)]
-        public string DueDate { get; set; }
-        [MaxLength(10)]
-        public string ProposalDate { get; set; }
+        public DateOnly DueDate { get; set; }
+        public TimeOnly DueTime { get; set; }
+        public DateTime ProposalDate { get; set; }
     }
 }

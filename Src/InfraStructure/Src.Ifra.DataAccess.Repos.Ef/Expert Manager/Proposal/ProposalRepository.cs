@@ -34,7 +34,8 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.Proposal
                 Description = objct.Description,
                 Price = objct.Price,
                 DueDate = objct.DueDate,
-                ProposalDate = PersianDateExtensionMethods.ToPersianString(DateTime.UtcNow),
+                DueTime = objct.DueTime,
+                ProposalDate = DateTime.Now,
                 Status = ProposalStatus.Pending
             };
             try
@@ -84,6 +85,7 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.Proposal
                 proposalinfo.Price = proposal.Price;
                 proposalinfo.Description = proposal.Description;
                 proposalinfo.DueDate = proposal.DueDate;
+                proposalinfo.DueTime = proposalinfo.DueTime;
                 proposalinfo.ProposalDate = proposal.ProposalDate;
                 proposalinfo.HomeServiceName = proposalinfo.HomeServiceName;
                 proposalinfo.Status = proposalinfo.Status;
@@ -114,6 +116,7 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.Proposal
                                    p.Description,
                                    p.Price,
                                    p.DueDate,
+                                   p.DueTime,
                                    p.Expert.UserName,
                                    p.ProposalDate,
                                    p.Status
@@ -127,6 +130,7 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.Proposal
                                    Id = proposal.Id,
                                    Description = proposal.Description,
                                    DueDate = proposal.DueDate,
+                                   DueTime = proposal.DueTime,
                                    ProposalDate = proposal.ProposalDate,
                                    ExpertName = proposal.UserName,
                                    Price = proposal.Price,

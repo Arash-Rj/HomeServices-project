@@ -10,10 +10,11 @@ namespace Src.Domain.Core.HomeServices_Manager.HomeServices.AppService
 {
     public interface IHomeServiceAppService
     {
-        public Result Add(HomeServiceDto homeServiceDto);
-        public Result Update(HomeServiceDto homeServiceDto);
-        public List<HomeServiceDto> HomeServices();
-        public List<Category> Categories();
-        public List<SubCategory> SubCategories();
+        public Task<Result> Add(HomeServiceDto homeServiceDto, CancellationToken cancellationToken);
+        public Task<Result> Update(HomeServiceDto homeServiceDto, CancellationToken cancellationToken);
+        public Task<Result> Delete(int id, CancellationToken cancellationToken);
+        public Task<HomeServiceDto?> GetInfo(int id, CancellationToken cancellationToken);
+        public Task<List<HomeServiceDto>?> GetAllInfo(CancellationToken cancellationToken);
+        public Task<List<SubCategory>> SubCategories(CancellationToken cancellationToken);
     }
 }

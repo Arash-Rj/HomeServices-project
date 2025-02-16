@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Src.Domain.Core.Expert_Manager.Expert.Entities;
+using Src.Domain.Core.Expert_Manager.Expert.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,20 @@ namespace Src.Infra.DataBase.SqlServer.Ef.Configuration
                 .HasForeignKey(p => p.ExpertId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-           
+            builder.HasData(
+                new Proposal()
+                {
+                    Id = 1,
+                    ExpertId = 3,
+                    ProposalDate = DateTime.Now,
+                    DueDate = DateOnly.FromDateTime(DateTime.Now.AddDays(2)),
+                    DueTime = new TimeOnly(16, 40),
+                    Description = "من میتوانم این کار را در زمان مقرر به اتمام برسانم",
+                    Price = 350,
+                    RequestId = 1,
+                    Status = ProposalStatus.Accepted
+                }
+                );
         }
     }
 }

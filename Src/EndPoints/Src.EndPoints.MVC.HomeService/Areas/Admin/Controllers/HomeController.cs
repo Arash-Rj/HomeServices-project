@@ -6,12 +6,12 @@ using Src.EndPoints.MVC.HomeService.Models;
 
 namespace Src.EndPoints.MVC.HomeService.Areas.Admin.Controllers
 {
-    [Authorize(Roles ="Admin")]
     [Area("Admin")]
-    public class AdminController : Controller
+    //[Authorize(Roles ="Admin")]
+    public class HomeController : Controller
     {
         private readonly IUserAppService _userAppService;
-        public AdminController(IUserAppService userAppService)
+        public HomeController(IUserAppService userAppService)
         {
             _userAppService = userAppService;
         }

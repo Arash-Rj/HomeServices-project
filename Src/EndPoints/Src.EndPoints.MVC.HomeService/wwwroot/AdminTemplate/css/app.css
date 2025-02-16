@@ -8611,7 +8611,7 @@ a.bg-base:hover, a.bg-base:focus, button.bg-base:hover, button.bg-base:focus {
 }
 
 .pl-3, .px-3 {
-  padding-left : 1.5rem !important;
+  padding-left: 1.5rem !important;
 }
 
 .p-4 {
@@ -45683,7 +45683,7 @@ ul.list-inline.list-inline-pipe > li + li:before {
 }
 
 .clockCard {
-  float : right;
+  float : left;
   border-radius : 0.50rem;
   color : #FFFFFF;
 }

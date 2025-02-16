@@ -17,6 +17,6 @@ namespace Src.Domain.Core.HomeServices_Manager.HomeServices.Entities
         public Category Category { get; set; }
         public List<AppExpert> AppExperts { get; set; }
         public List<HomeService> HomeServices { get; set; }
-        public string ImagePath { get; set; }
+        public string? ImagePath { get; set; }
     }
 }
