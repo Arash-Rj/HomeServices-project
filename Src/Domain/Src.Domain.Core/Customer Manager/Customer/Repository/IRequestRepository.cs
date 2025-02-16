@@ -13,8 +13,8 @@ namespace Src.Domain.Core.Customer_Manager.Customer.Repository
     {
         public Task<Result> Create(CreateRequestDto objct, CancellationToken cancellationToken);
         public Task<Result> Delete(int id, CancellationToken cancellationToken);
-        public Task<AppRequest>? Get(int id, CancellationToken cancellationToken);
-        public Task<List<RequestInfoDto>>? GetAll(CancellationToken cancellationToken);
+        public Task<AppRequest>? GetInfo(int id, CancellationToken cancellationToken);
+        public Task<List<RequestInfoDto>>? GetAllInfo(CancellationToken cancellationToken);
         public Task<Result> Update(RequestInfoDto objct, CancellationToken cancellationToken);
     }
 }

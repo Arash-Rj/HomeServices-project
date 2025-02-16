@@ -66,7 +66,7 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Request
             return new Result(true, "حذف سفارش با موفقیت انجام شد.");
         }
 
-        public async Task<AppRequest>? Get(int id, CancellationToken cancellationToken)
+        public async Task<AppRequest>? GetInfo(int id, CancellationToken cancellationToken)
         {
             var appRequest = new AppRequest();
             try
@@ -86,7 +86,7 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Request
             return appRequest;
         }
 
-        public async Task<List<RequestInfoDto>>? GetAll(CancellationToken cancellationToken)
+        public async Task<List<RequestInfoDto>>? GetAllInfo(CancellationToken cancellationToken)
         {
             var requestdtos = new List<RequestInfoDto>();
             try
