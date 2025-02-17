@@ -10,7 +10,7 @@ namespace Src.Domain.Core.Customer_Manager.Customer.Enums
     public enum ReqStatus
     {
         [Display(Name = "انجام شده")]
-        Success,
+        Success=1,
         [Display(Name = "انجام نشده")]
         Failed,
         [Display(Name = "در حال انتظار")]

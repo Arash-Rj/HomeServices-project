@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="AAM\ManageAdmin\Enums\" />
     <Folder Include="Configs\" />
+    <Folder Include="HomeServices Manager\HomeServices\Enums\" />
     <Folder Include="Payment Manager\Payment\Enums\" />
   </ItemGroup>
 	<ItemGroup>

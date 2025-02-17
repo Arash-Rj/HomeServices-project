@@ -1,6 +1,5 @@
 ﻿using Src.Domain.Core.Base.Entities;
 using Src.Domain.Core.Customer_Manager.Customer.Entities;
-using Src.Domain.Core.HomeServices_Manager.HomeServices.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;

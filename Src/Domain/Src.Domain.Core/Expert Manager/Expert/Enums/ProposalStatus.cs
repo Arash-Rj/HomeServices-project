@@ -10,7 +10,7 @@ namespace Src.Domain.Core.Expert_Manager.Expert.Enums
     public enum ProposalStatus
     {
         [Display(Name = "پیشنهاد شما قبول شده.")]
-        Accepted,
+        Accepted=1,
         [Display(Name = ".در انتظار تصمیم مشتری")]
         Pending,
         [Display(Name = "پیشنهاد شما رد شد.")]
