@@ -62,7 +62,10 @@ builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
 )
 .AddRoles<IdentityRole<int>>()
 .AddEntityFrameworkStores<AppDbContext>();
-
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Admin/Home/Login";
+});
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserAppService, UserAppService>();
@@ -107,13 +110,10 @@ app.UseAuthorization();
 
 app.MapStaticAssets();
 
-
-    app.MapControllerRoute(
+app.MapControllerRoute(
       name: "areas",
       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
     );
-
-
 
 app.MapControllerRoute(
     name: "default",

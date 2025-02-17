@@ -77,13 +77,13 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Customer
             return customerdto;
         }
 
-        public async Task<List<CustomerDto>> GetAll(CancellationToken cancellationToken)
+        public async Task<List<CustomerDto>> GetAllInfo(CancellationToken cancellationToken)
         {
             var customers = new List<AppCustomer>();
             var customerdtos = new List<CustomerDto>();
             try
             {
-                customers = await _appDbContext.Users.OfType<AppCustomer>().ToListAsync(cancellationToken);
+                customers = await _appDbContext.AppCustomers.Include(c => c.Requests).ToListAsync(cancellationToken);
                 foreach (var customer in customers)
                 {
                   var customerdto =  new CustomerDto
@@ -91,7 +91,8 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Customer
                         Id = customer.Id,
                         Name = customer.UserName,
                         Phone = customer.PhoneNumber,
-                        Email = customer.Email
+                        Email = customer.Email,
+                        Requests = customer.Requests
                     };
                     customerdtos.Add(customerdto);
                 }

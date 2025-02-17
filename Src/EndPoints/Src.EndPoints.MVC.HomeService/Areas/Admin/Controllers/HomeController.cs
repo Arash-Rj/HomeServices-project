@@ -7,7 +7,7 @@ using Src.EndPoints.MVC.HomeService.Models;
 namespace Src.EndPoints.MVC.HomeService.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public class HomeController : Controller
     {
         private readonly IUserAppService _userAppService;
@@ -19,12 +19,14 @@ namespace Src.EndPoints.MVC.HomeService.Areas.Admin.Controllers
         {
             return View();
         }
+        [AllowAnonymous]
         public IActionResult Login()
         {
             var loginmodel = new AdminLoginModel();
             return View(loginmodel);
         }
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(AdminLoginModel adminLoginModel, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
@@ -39,5 +41,6 @@ namespace Src.EndPoints.MVC.HomeService.Areas.Admin.Controllers
             }
             return RedirectToAction("Index");
         }
+
     }
 }

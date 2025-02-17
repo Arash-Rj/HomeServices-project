@@ -15,7 +15,7 @@ namespace Src.Domain.Core.Customer_Manager.Customer.Repository
         public Task<Result> Create(UserDto objct, CancellationToken cancellationToken);
         public Task<Result> Delete(int id, CancellationToken cancellationToken);
         public Task<CustomerDto> GetInfo(int id, CancellationToken cancellationToken);
-        public Task<List<CustomerDto>> GetAll(CancellationToken cancellationToken);
+        public Task<List<CustomerDto>> GetAllInfo(CancellationToken cancellationToken);
         public Task<Result> Update(CustomerDto objct, CancellationToken cancellationToken);
     }
 }

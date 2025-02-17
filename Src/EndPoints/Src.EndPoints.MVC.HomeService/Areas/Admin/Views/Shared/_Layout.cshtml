@@ -1,4 +1,4 @@
-﻿@RenderBody()
+﻿
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,15 +33,25 @@
      @await Html.PartialAsync("_Header")
     <!--End Header-->
 
+    <!--Begin Wrapper-->
+    <div class="main-panel">
+        <div class="main-content">
+            <div class="content-wrapper">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Wrapper-->
+
     <!-- Side menu -->
     @await Html.PartialAsync("_SideMenu")
     <!-- Side menu -->
 
-
     <!-- Customize Buttone -->
     @await Html.PartialAsync("_CustomizeButton")
     <!-- Customize Buttone -->
-
 
     <!-- BEGIN VENDOR JS-->
     <script src="~/AdminTemplate/vendors/js/core/jquery-3.3.1.min.js"></script>
