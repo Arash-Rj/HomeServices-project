@@ -15,6 +15,6 @@ namespace Src.Domain.Core.HomeServices_Manager.HomeServices.AppService
         public Task<Result> Delete(int id, CancellationToken cancellationToken);
         public Task<HomeServiceDto?> GetInfo(int id, CancellationToken cancellationToken);
         public Task<List<HomeServiceDto>?> GetAllInfo(CancellationToken cancellationToken);
-        public Task<List<SubCategory>> SubCategories(CancellationToken cancellationToken);
+        public Task<List<SubCategory>?> SubCategories(CancellationToken cancellationToken);
     }
 }

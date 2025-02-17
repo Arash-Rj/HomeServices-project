@@ -64,7 +64,7 @@ namespace Src.Domain.AppService.Services_Manager.Service
             return homeservicedto;
         }
 
-        public Task<List<SubCategory>> SubCategories(CancellationToken cancellationToken)
+        public Task<List<SubCategory>?> SubCategories(CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
