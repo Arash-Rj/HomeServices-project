@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Entities;
-using Src.Domain.Core.HomeServices_Manager.HomeServices.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
