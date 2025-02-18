@@ -10,8 +10,8 @@ namespace Src.Domain.Core.Customer_Manager.Customer.AppService
 {
     public interface ICustomerAppService
     {
-        public Task<CustomerDto> GetInfo(int id, CancellationToken cancellationToken);
-        public Task<List<CustomerDto>> GetAllInfo(CancellationToken cancellationToken);
+        public Task<CustomerDto?> GetInfo(int id, CancellationToken cancellationToken);
+        public Task<List<CustomerDto>?> GetAllInfo(CancellationToken cancellationToken);
         public Task<Result> Update(CustomerDto objct, CancellationToken cancellationToken);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Src.Domain.Core.Base.Entities;
 using Src.Domain.Core.Customer_Manager.Customer.Dtos;
+using Src.Domain.Core.Customer_Manager.Customer.Entities;
 using Src.Domain.Core.Customer_Manager.Customer.Repository;
 using Src.Domain.Core.Customer_Manager.Customer.Service;
 using Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Request;
@@ -18,7 +19,7 @@ namespace Src.Domain.Service.Customer_Manager.Customer
         {
             _customerRepository = customerRepository;
         }
-        public async Task<List<CustomerDto>> GetAllInfo(CancellationToken cancellationToken)
+        public async Task<List<CustomerDto>?> GetAllInfo(CancellationToken cancellationToken)
         {
             var customerDtos = new List<CustomerDto>();
             try
@@ -36,14 +37,27 @@ namespace Src.Domain.Service.Customer_Manager.Customer
             return customerDtos;
         }
 
-        public Task<CustomerDto> GetInfo(int id, CancellationToken cancellationToken)
+        public async Task<CustomerDto?> GetInfo(int id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var customerDto = new CustomerDto();
+            try
+            {
+                customerDto = await _customerRepository.GetInfo(id, cancellationToken);
+                if (customerDto is null)
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return customerDto;
         }
 
-        public Task<Result> Update(CustomerDto objct, CancellationToken cancellationToken)
+        public async Task<Result> Update(CustomerDto objct, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _customerRepository.Update(objct, cancellationToken);
         }
     }
 }

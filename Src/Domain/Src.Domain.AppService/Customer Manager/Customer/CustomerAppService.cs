@@ -17,7 +17,7 @@ namespace Src.Domain.AppService.Customer_Manager.Customer
         {
             _customerService = customerService;
         }
-        public async Task<List<CustomerDto>> GetAllInfo(CancellationToken cancellationToken)
+        public async Task<List<CustomerDto>?> GetAllInfo(CancellationToken cancellationToken)
         {
             var customerDtos = new List<CustomerDto>();
             try
@@ -35,14 +35,28 @@ namespace Src.Domain.AppService.Customer_Manager.Customer
             return customerDtos;
         }
 
-        public Task<CustomerDto> GetInfo(int id, CancellationToken cancellationToken)
+        public async Task<CustomerDto?> GetInfo(int id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var customerDto = new CustomerDto();
+            try
+            {
+                customerDto = await _customerService.GetInfo(id, cancellationToken);
+                if (customerDto is null)
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return customerDto;
         }
 
-        public Task<Result> Update(CustomerDto objct, CancellationToken cancellationToken)
+        public async Task<Result> Update(CustomerDto objct, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            
+            return await _customerService.Update(objct, cancellationToken);
         }
     }
 }
