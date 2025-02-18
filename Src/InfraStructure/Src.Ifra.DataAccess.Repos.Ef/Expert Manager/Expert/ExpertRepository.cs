@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Src.Domain.Core.Base.Entities;
+using Src.Domain.Core.Customer_Manager.Customer.Dtos;
 using Src.Domain.Core.Customer_Manager.Customer.Entities;
+using Src.Domain.Core.Expert_Manager.Expert.Dtos;
 using Src.Domain.Core.Expert_Manager.Expert.Entities;
 using Src.Domain.Core.Expert_Manager.Expert.Repository;
 using Src.Infra.DataBase.SqlServer.Ef.DbContext;
@@ -33,11 +35,14 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.Expert
             return new Result(true, "ثبت نام با موفقیت انجام شد.");
         }
 
-        public async Task<Result> Delete(AppExpert objct, CancellationToken cancellationToken)
+        public async Task<Result> Delete(int id, CancellationToken cancellationToken)
         {
             try
             {
-                _appDbContext.Users.Remove(objct);
+                var expert = _appDbContext.AppExperts.SingleOrDefault(x => x.Id == id);
+                if (expert == null)
+                    return new Result(false, "کارشناسی با این ایدی پیدا نشد!");
+                expert.IsActive = false;
                 var res = await _appDbContext.SaveChangesAsync(cancellationToken);
             }
             catch (Exception ex)
@@ -47,39 +52,75 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.Expert
             return new Result(true, "حذف با موفقیت انجام شد.");
         }
 
-        public async Task<AppExpert> Get(int id, CancellationToken cancellationToken)
+        public async Task<ExpertDto?> GetInfo(int id, CancellationToken cancellationToken)
         {
-            var customer = new AppExpert();
+            var expertdto = new ExpertDto();
             try
             {
-                customer = await _appDbContext.Users.OfType<AppExpert>().FirstAsync(u => u.Id.Equals(id), cancellationToken);
+               var expert = await _appDbContext.AppExperts
+                    .Select(e => new { e.Id, e.UserName, e.PhoneNumber, e.Email, e.Proposals.Count, e.Province })
+                    .FirstAsync(u => u.Id.Equals(id), cancellationToken);
+                expertdto.Id = expert.Id;
+                expertdto.Email = expert.Email;
+                expertdto.Phone = expert.PhoneNumber;
+                expertdto.Name = expert.UserName;
+                expertdto.Province = expert.Province;
+            }
+            catch (NullReferenceException ex)
+            {
+                return null;
             }
             catch (Exception ex)
             {
-                return customer;
+                return expertdto;
             }
-            return customer;
+            return expertdto;
         }
 
-        public async Task<List<AppExpert>> GetAll(CancellationToken cancellationToken)
+        public async Task<List<ExpertDto>?> GetAllInfo(CancellationToken cancellationToken)
         {
-            var users = new List<AppExpert>();
+            var expertdtos = new List<ExpertDto>();
             try
             {
-                users = await _appDbContext.Users.OfType<AppExpert>().ToListAsync(cancellationToken);
+               var exprets = await _appDbContext.AppExperts
+                    .Select(e => new {e.Id , e.UserName , e.PhoneNumber , e.Email , e.Proposals.Count , e.Province})
+                    .ToListAsync(cancellationToken);
+                foreach (var expert in exprets)
+                {
+                    var expertdto = new ExpertDto
+                    {
+                        Id = expert.Id,
+                        Name = expert.UserName,
+                        Phone = expert.PhoneNumber,
+                        Email = expert.Email,
+                        ProposalCount = expert.Count,
+                        Province = expert.Province
+                    };
+                    expertdtos.Add(expertdto);
+                }
+            }
+            catch (NullReferenceException ex)
+            {
+                return null;
             }
             catch (Exception ex)
             {
-                return users;
+                throw ex;
             }
-            return users;
+            return expertdtos;
         }
 
-        public async Task<Result> Update(AppExpert objct, CancellationToken cancellationToken)
+        public async Task<Result> Update(ExpertDto objct, CancellationToken cancellationToken)
         {
             try
             {
-                _appDbContext.Users.Update(objct);
+                var expert = await _appDbContext.AppExperts.FirstOrDefaultAsync(c => c.Id == objct.Id);
+                if (expert == null)
+                    return new Result(false, "کارشناس با این ایدی پیدا نشد!");
+                expert.UserName = objct.Name;
+                expert.Email = objct.Email;
+                expert.PhoneNumber = objct.Phone;
+                expert.Province = objct.Province;
                 var res = await _appDbContext.SaveChangesAsync(cancellationToken);
             }
             catch (Exception ex)

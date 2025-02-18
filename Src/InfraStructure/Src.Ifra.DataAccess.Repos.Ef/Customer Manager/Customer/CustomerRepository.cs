@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Src.Domain.Core.AAM.ManageUser.Entities;
 using Src.Domain.Core.Base.Entities;
@@ -46,8 +47,10 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Customer
         {
             try
             {
-                var customer = _appDbContext.Users.SingleOrDefault(x => x.Id == id);
-                 _appDbContext.Users.Remove(customer);
+                var customer = _appDbContext.AppCustomers.SingleOrDefault(x => x.Id == id);
+                if (customer == null)
+                    return new Result(false, "مشتری با این ایدی پیدا نشد!");
+                customer.IsActive = false;
                 var res = await _appDbContext.SaveChangesAsync(cancellationToken);
             }
             catch (Exception ex)
@@ -57,33 +60,39 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Customer
             return new Result(true, "حذف با موفقیت انجام شد.");
         }
 
-        public async Task<CustomerDto> GetInfo(int id, CancellationToken cancellationToken)
+        public async Task<CustomerDto?> GetInfo(int id, CancellationToken cancellationToken)
         {
-            var customer = new AppCustomer();
             var customerdto = new CustomerDto();
             try
             {
-                customer = await _appDbContext.Users.OfType<AppCustomer>().FirstAsync(u => u.Id.Equals(id),cancellationToken);
-
+               var customer = await _appDbContext.AppCustomers
+                    .Select(e => new { e.Id, e.UserName, e.PhoneNumber, e.Email, e.Requests.Count, e.Province })
+                    .FirstAsync(u => u.Id.Equals(id),cancellationToken);
                 customerdto.Id = customer.Id;
                 customerdto.Email = customer.Email;
                 customerdto.Phone = customer.PhoneNumber;
                 customerdto.Name = customer.UserName;
+                customerdto.Province = customer.Province;
             }
             catch(NullReferenceException ex)
             {
                 return customerdto;
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             return customerdto;
         }
 
-        public async Task<List<CustomerDto>> GetAllInfo(CancellationToken cancellationToken)
+        public async Task<List<CustomerDto>?> GetAllInfo(CancellationToken cancellationToken)
         {
-            var customers = new List<AppCustomer>();
             var customerdtos = new List<CustomerDto>();
             try
             {
-                customers = await _appDbContext.AppCustomers.Include(c => c.Requests).ToListAsync(cancellationToken);
+               var customers = await _appDbContext.AppCustomers
+                    .Select(e => new { e.Id, e.UserName, e.PhoneNumber, e.Email, e.Requests.Count, e.Province })
+                    .ToListAsync(cancellationToken);
                 foreach (var customer in customers)
                 {
                   var customerdto =  new CustomerDto
@@ -92,7 +101,8 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Customer
                         Name = customer.UserName,
                         Phone = customer.PhoneNumber,
                         Email = customer.Email,
-                        Requests = customer.Requests
+                        RequestCount = customer.Count,
+                        Province = customer.Province,
                     };
                     customerdtos.Add(customerdto);
                 }
@@ -101,6 +111,10 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Customer
             {
                 return customerdtos;
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             return customerdtos;
         }
 
@@ -108,10 +122,13 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Customer
         {
             try
             {
-                var customer = await _appDbContext.Users.FirstOrDefaultAsync(c => c.Id == objct.Id);
+                var customer = await _appDbContext.AppCustomers.FirstOrDefaultAsync(c => c.Id == objct.Id);
+                if (customer == null)
+                    return new Result(false, "مشتری با این ایدی پیدا نشد!");
                 customer.UserName = objct.Name;
                 customer.Email = objct.Email;
                 customer.PhoneNumber = objct.Phone;
+                customer.Province = objct.Province;
                 var res =await _appDbContext.SaveChangesAsync(cancellationToken);
             }
             catch(Exception ex)

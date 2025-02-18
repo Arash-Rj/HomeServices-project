@@ -1,6 +1,6 @@
 ﻿@using Src.Domain.Core.Customer_Manager.Customer.Dtos
 @model List<CustomerDto>
-<div class="row match-height">
+<div class="column match-height">
     <div class="col-12 col-xl-12" id="recent-sales">
         <div class="card">
             <div class="card-header">
@@ -37,7 +37,7 @@
                                 <td class="text-truncate">@customer.Name</td>
                                 <td class="text-truncate">@customer.Email</td>
                                 <td class="text-truncate">@customer.Phone</td>
-                                <td class="text-truncate">@customer.Requests.Count</td>
+                                <td class="text-truncate">@customer.RequestCount</td>
                             </tr>
                             }
                         </tbody>
@@ -82,7 +82,7 @@
                                     <td class="text-truncate">@customer.Name</td>
                                     <td class="text-truncate">@customer.Email</td>
                                     <td class="text-truncate">@customer.Phone</td>
-                                    <td class="text-truncate">@customer.Requests.Count</td>
+                                    <td class="text-truncate">@customer.RequestCount</td>
                                 </tr>
                             }
                         </tbody>

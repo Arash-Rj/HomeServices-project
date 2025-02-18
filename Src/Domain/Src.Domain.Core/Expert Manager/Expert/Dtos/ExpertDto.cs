@@ -1,4 +1,5 @@
-﻿using Src.Domain.Core.Expert_Manager.Expert.Entities;
+﻿using Src.Domain.Core.AAM.ManageUser.Enums;
+using Src.Domain.Core.Expert_Manager.Expert.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace Src.Domain.Core.Expert_Manager.Expert.Dtos
         public string Name { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public List<Proposal> Proposals { get; set; }
+        public ProvinceEnum Province { get; set; }
+        public int ProposalCount { get; set; }
     }
 }
