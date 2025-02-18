@@ -1,0 +1,49 @@
+﻿@using Src.Domain.Core.Expert_Manager.Expert.Dtos
+@model List<ExpertDto>
+<div class="row match-height">
+    <div class="col-12 col-xl-12" id="recent-sales">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title-wrap bar-primary">
+                    <h4 class="card-title">
+                        مشتریان
+                    </h4>
+                </div>
+                <a class="heading-elements-toggle">
+                    <i class="la la-ellipsis-v font-medium-3"></i>
+                </a>
+            </div>
+            <div class="card-content mt-1">
+                <div class="table-responsive">
+                    <table class="table table-hover table-xl mb-0" id="recent-orders">
+                        <thead>
+                            <tr>
+                                <th class="border-top-0">شناسه</th>
+                                <th class="border-top-0">
+                                    نام
+                                </th>
+                                <th class="border-top-0">ایمیل</th>
+                                <th class="border-top-0">شماره موبایل</th>
+                                <th class="border-top-0">تعداد سفارش ها</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var expert in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-success round mb-0" type="button">@expert.Id</button>
+                                    </td>
+                                    <td class="text-truncate">@expert.Name</td>
+                                    <td class="text-truncate">@expert.Email</td>
+                                    <td class="text-truncate">@expert.Phone</td>
+                                    <td class="text-truncate">@expert.ProposalCount</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
