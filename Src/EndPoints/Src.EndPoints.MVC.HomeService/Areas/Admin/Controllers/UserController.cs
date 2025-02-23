@@ -50,9 +50,9 @@ namespace Src.EndPoints.MVC.HomeService.Areas.Admin.Controllers
             return View("/Areas/Admin/Views/User/Expert/AllExperts.cshtml", expertDtos);
         }
 
-        public IActionResult CreateCustomer()
+        public IActionResult Create()
         {
-            return View("/Areas/Admin/Views/User/Customer/Create.cshtml");
+            return View("/Areas/Admin/Views/User/Create.cshtml");
         }
         [HttpPost]
         public async Task<IActionResult> CreateCustomer(UserRegisterModel userRegisterModel,CancellationToken cancellationToken)
@@ -75,7 +75,7 @@ namespace Src.EndPoints.MVC.HomeService.Areas.Admin.Controllers
             if (!result.Success)
             {
                 ViewBag.ErrorMessage = result.Message;
-                return View("/Areas/Admin/Views/User/Customer/Create.cshtml");
+                return View("/Areas/Admin/Views/User/Create.cshtml");
             }
             TempData["SuccessMessage"] = result.Message;
             return RedirectToAction("Index","Home");

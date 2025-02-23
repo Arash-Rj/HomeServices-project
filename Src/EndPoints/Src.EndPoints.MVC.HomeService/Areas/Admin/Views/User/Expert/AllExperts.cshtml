@@ -13,6 +13,14 @@
                 <a class="heading-elements-toggle">
                     <i class="la la-ellipsis-v font-medium-3"></i>
                 </a>
+                @if (TempData["SuccessMessage"] is not null)
+                {
+                    <div id="alertbox" class="alert alert-success" role="alert">@TempData["SuccessMessage"]</div>
+                }
+                @if (TempData["ErrorMessage"] is not null)
+                {
+                    <div id="alertbox" class="alert alert-danger" role="alert">@TempData["ErrorMessage"]</div>
+                }
             </div>
             <div class="card-content mt-1">
                 <div class="table-responsive">
@@ -63,6 +71,9 @@
                             }
                         </tbody>
                     </table>
+                    <div class="col-12">
+                        <a class="btn btn-info btn-sm" asp-area="Admin" asp-action="Create" asp-controller="User"> افزودن کارشناس جدید </a>
+                    </div>
                 </div>
             </div>
         </div>

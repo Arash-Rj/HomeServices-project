@@ -6,44 +6,43 @@
 		<div class="card">
 			<div class="card-header">
 				<div class="card-title-wrap bar-success">
-					<h4 class="card-title" id="horz-layout-basic">ثبت مشتری جدید</h4>
+					<h4 class="card-title" id="horz-layout-basic">ثبت کاربر جدید</h4>
 				</div>
 			</div>
 			<div class="card-body">
 				<div class="px-3">
-					<form asp-action="CreateCustomer" class="form form-horizontal" method="post">
-						<div class="form-body">
-							<h4 class="form-section">
-								<i class="icon-user" style="color:cadetblue;"></i> اطلاعات مشتری
-							</h4>
-
+					<form asp-action="Create" class="form form-horizontal" method="post">
+						<h4 class="form-section">
+							<i class="icon-user" style="color:cadetblue;"></i> اطلاعات کاربر
+						</h4>
+						<div class="form-body ">
 							<div class="form-group row">
-								<label class="col-md-3 label-control" for="projectinput1">نام کاربری: </label>
-								<div class="col-md-9">
+								<label class="col-lg-1 text-lg-right label-control" for="projectinput1">نام کاربری: </label>
+								<div class="col-md-12">
 									<input asp-for=UserName type="text" id="projectinput1" class="form-control">
 									<span class="text-danger m-3" asp-validation-for="@Model.UserName"></span>
 								</div>
 							</div>
 
 							<div class="form-group row">
-								<label class="col-md-3 label-control" for="projectinput3">ایمیل : </label>
-								<div class="col-md-9">
+								<label class="col-lg-1 text-lg-right label-control" for="projectinput3">ایمیل : </label>
+								<div class="col-md-12">
 									<input asp-for=Email type="email" id="projectinput3" class="form-control">
 									<span class="text-danger m-3" asp-validation-for="@Model.Email"></span>
 								</div>
 							</div>
 
 							<div class="form-group row">
-								<label class="col-md-3 label-control" for="projectinput3">رمز عبور : </label>
-								<div class="col-md-9">
+								<label class="col-lg-1 text-lg-right label-control" for="projectinput3">رمز عبور : </label>
+								<div class="col-md-12">
 									<input asp-for=Password type="password" id="projectinput3" class="form-control">
 									<span class="text-danger m-3" asp-validation-for="@Model.Password"></span>
 								</div>
 							</div>
 
 							<div class="form-group row">
-								<label class="col-md-3 label-control" for="projectinput4">نقش : </label>
-								<div class="col-md-9">
+								<label class="col-lg-1 text-lg-right label-control" for="projectinput4">نقش : </label>
+								<div class="col-md-12">
 									<select asp-for=Role id="projectinput5" class="form-control">
 										<option value="none" selected="" disabled="">انتخاب کنید</option>
 											<option value="0">@RoleEnum.Customer.GetEnumDisplayName()</option>
