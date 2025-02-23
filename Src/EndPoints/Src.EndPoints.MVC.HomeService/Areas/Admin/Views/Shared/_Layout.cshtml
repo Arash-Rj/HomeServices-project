@@ -1,6 +1,4 @@
-﻿
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -32,7 +30,6 @@
     <!--Begin Header-->
      @await Html.PartialAsync("_Header")
     <!--End Header-->
-
     <!--Begin Wrapper-->
     <div class="main-panel">
         <div class="main-content">
@@ -73,6 +70,16 @@
     <!-- END CONVEX JS-->
     <!-- BEGIN PAGE LEVEL JS-->
     <script src="~/AdminTemplate/js/dashboard-ecommerce.js"></script>
+    <script>
+        setTimeout(function () {
+            var alertbox = document.getElementById('alertbox');
+            if (alertbox) {
+                alertbox.style.transition = 'opacity 0.5s ease'
+                alertbox.style.opacity = '0';
+                setTimeout(function () { alertbox.remove(); }, 500);
+            }
+        },2000);
+    </script>
     <!-- END PAGE LEVEL JS-->
     @await RenderSectionAsync("Scripts", required: false)
 </body>

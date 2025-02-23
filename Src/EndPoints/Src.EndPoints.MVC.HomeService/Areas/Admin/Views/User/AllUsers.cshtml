@@ -1,1 +1,8 @@
-﻿
+﻿@if (TempData["SuccessMessage"] is not null)
+{
+    <div id="alertbox" class="alert alert-success" role="alert">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] is not null)
+{
+    <div id="alertbox" class="alert alert-danger" role="alert">@TempData["ErrorMessage"]</div>
+}

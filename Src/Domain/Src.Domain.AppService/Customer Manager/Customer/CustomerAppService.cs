@@ -35,6 +35,11 @@ namespace Src.Domain.AppService.Customer_Manager.Customer
             return customerDtos;
         }
 
+        public async Task<UpdateCustomerDto?> GetDetailedInfo(int id, CancellationToken cancellationToken)
+        {
+            return await _customerService.GetDetailedInfo(id, cancellationToken);
+        }
+
         public async Task<CustomerDto?> GetInfo(int id, CancellationToken cancellationToken)
         {
             var customerDto = new CustomerDto();
@@ -53,7 +58,7 @@ namespace Src.Domain.AppService.Customer_Manager.Customer
             return customerDto;
         }
 
-        public async Task<Result> Update(CustomerDto objct, CancellationToken cancellationToken)
+        public async Task<Result> Update(UpdateCustomerDto objct, CancellationToken cancellationToken)
         {
             
             return await _customerService.Update(objct, cancellationToken);

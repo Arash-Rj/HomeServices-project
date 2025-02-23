@@ -1,4 +1,5 @@
-﻿@using Src.Domain.Core.Customer_Manager.Customer.Dtos
+﻿@using Src.Domain.Core.AAM.ManageUser.Enums
+@using Src.Domain.Core.Customer_Manager.Customer.Dtos
 @model List<CustomerDto>
 <div class="row match-height">
     <div class="col-12 col-xl-12" id="recent-sales">
@@ -12,6 +13,14 @@
                 <a class="heading-elements-toggle">
                     <i class="la la-ellipsis-v font-medium-3"></i>
                 </a>
+                @if (TempData["SuccessMessage"] is not null)
+                {
+                    <div id="alertbox" class="alert alert-success" role="alert">@TempData["SuccessMessage"]</div>
+                }
+                @if (TempData["ErrorMessage"] is not null)
+                {
+                    <div id="alertbox" class="alert alert-danger" role="alert">@TempData["ErrorMessage"]</div>
+                }
             </div>
             <div class="card-content mt-1">
                 <div class="table-responsive">
@@ -24,6 +33,7 @@
                                 </th>
                                 <th class="border-top-0">ایمیل</th>
                                 <th class="border-top-0">شماره موبایل</th>
+                                <th class="border-top-0">استان</th>
                                 <th class="border-top-0">تعداد سفارش ها</th>
                             </tr>
                         </thead>
@@ -36,8 +46,27 @@
                                     </td>
                                     <td class="text-truncate">@customer.Name</td>
                                     <td class="text-truncate">@customer.Email</td>
+                                    @if(customer.Phone == null)
+                                    {
+                                        <td class="text-truncate text-danger">شماره موبایل ثبت نشده است.</td>
+                                    }
+                                    else
+                                    {
                                     <td class="text-truncate">@customer.Phone</td>
-                                    <td class="text-truncate">@customer.RequestCount</td>
+                                    }
+                                    <td class="text-truncate">@customer.Province</td>
+                                    @if (customer.RequestCount == 0)
+                                    {
+                                        <td class="text-truncate text-danger">سفارشی ثبت نشده.</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-truncate">@customer.RequestCount</td>
+                                    }
+                                    <td class="text-truncate">
+                                        <a class="btn btn-success btn-sm" asp-area="Admin" asp-action="Update" asp-controller="User" asp-route-id="@customer.Id"> ویرایش </a>
+                                        <a class="btn btn-warning btn-sm" asp-area="Admin" asp-action="UserDetails" asp-controller="User" asp-route-id="@customer.Id" asp-route-role="@RoleEnum.Customer"> جزئیات </a>
+                                    </td>
                                 </tr>
                             }
                         </tbody>

@@ -1,0 +1,148 @@
+﻿@using Framework
+@using Src.Domain.Core.AAM.ManageUser.Enums
+@using Src.EndPoints.MVC.HomeService.Areas.Admin.Models
+@model UpdateUserModel
+<div class="col-md-12">
+	<div class="card">
+		<div class="card-header">
+			<div class="card-title-wrap bar-warning">
+				@if(Model.Role == RoleEnum.Customer)
+				{
+					<h4 class="card-title" id="basic-layout-colored-form-control">ویرایش مشتری</h4>
+				}
+				@if (Model.Role == RoleEnum.Expert)
+				{
+					<h4 class="card-title" id="basic-layout-colored-form-control">ویرایش کارشناس</h4>
+				}
+			</div>
+		</div>
+		<div class="card-body">
+			<div class="px-3">
+				@if(ViewBag.ErrorMessage  is not null)
+				{
+					<div id="alertbox" class="alert alert-danger" role="alert">ViewBag.ErrorMessage</div>
+				}
+				<form asp-action="Update" asp-controller="User" class="form" method="post">
+					<div class="form-body">
+					  @if(Model.Role == RoleEnum.Customer)
+				      {
+						<h4 class="form-section">
+							<i class="icon-direction"></i> جزئیات مشتری
+						</h4>
+					  }
+						@if (Model.Role == RoleEnum.Expert)
+						{
+							<h4 class="form-section">
+								<i class="icon-direction"></i> جزئیات کارشناس
+							</h4>
+						}
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="userinput1">نام</label>
+									<input asp-for="Name" type="text" id="userinput1" class="form-control border-primary" >
+									<span class="text-danger m-3" asp-validation-for="Name"></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="userinput2">شماره موبایل</label>
+									<input asp-for="Phone" type="number" id="userinput2" class="form-control border-primary">
+									<span class="text-danger m-3" asp-validation-for="Phone"></span>
+								</div>
+							</div>
+						</div>
+                    	<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="userinput1">آدرس ایمیل</label>
+									<input asp-for="Email" type="email" id="userinput1" class="form-control border-primary" >
+									<span class="text-danger m-3" asp-validation-for="Email"></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="userinput2">شماره کارت</label>
+									<input asp-for="CardNumber" type="number" id="userinput2" class="form-control border-primary">
+									<span class="text-danger m-3" asp-validation-for="CardNumber"></span>
+								</div>
+							</div>
+						</div>
+					    <div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="col-md-3 label-control" for="projectinput4">استان : </label>
+										<select asp-for=Province id="projectinput5" class="form-control">
+											<option value="none" selected="" disabled="">انتخاب کنید</option>
+											<option value="1">@ProvinceEnum.گلستان</option>
+										    <option value="2">@ProvinceEnum.تبریز</option>
+										    <option value="3">@ProvinceEnum.اردبیل</option>
+										    <option value="4">@ProvinceEnum.تهران</option>
+										    <option value="5">@ProvinceEnum.کرمان</option>
+										    <option value="6">@ProvinceEnum.فارس</option>
+										    <option value="7">@ProvinceEnum.کرج</option>
+										    <option value="8">@ProvinceEnum.مازندران</option>
+										    <option value="9">@ProvinceEnum.سیستان_و_بلوچستان</option>
+										    <option value="10">@ProvinceEnum.یزد</option>
+										</select>
+										<span class="text-danger m-3" asp-validation-for="Province"></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="col-md-3 label-control" for="projectinput4">وضعیت : </label>
+										<select asp-for=IsActive id="projectinput5" class="form-control">
+											<option value="none" selected="" disabled="">انتخاب کنید</option>
+											<option value="false">غیرفعال</option>
+											<option value="true">فعال</option>
+										</select>
+										<span class="text-danger m-3" asp-validation-for="IsActive"></span>
+								</div>
+							</div>
+						</div>
+						@if(Model.Role == RoleEnum.Customer)
+						{
+							<div class="form-group">
+								<label for="userinput8">آدرس مشتری</label>
+								<textarea asp-for="Address" id="userinput8" rows="5" class="form-control border-primary"></textarea>
+								<span class="text-danger m-3" asp-validation-for="Address"></span>
+							</div>
+						}
+						@if(Model.Role == RoleEnum.Expert)
+						{
+				          <div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="userinput1">بیوگرافی</label>
+									<input asp-for="Bioghraphy" type="text" id="userinput1" class="form-control border-primary" >
+									<span class="text-danger m-3" asp-validation-for="Bioghraphy"></span>
+								</div>
+							</div>
+					      </div>
+						  <div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="userinput2">آدرس محل کار</label>
+										<textarea asp-for="WorkPlaceAddress" id="userinput8" rows="4" class="form-control border-primary"></textarea>
+									<span class="text-danger m-3" asp-validation-for="WorkPlaceAddress"></span>
+								</div>
+							</div>
+						  </div>
+						}
+
+					</div>
+
+					<div class="form-actions left">
+						<button type="reset" class="btn btn-danger mr-1">
+							<i class="icon-trash"></i> لغو
+						</button>
+						<button type="submit" class="btn btn-success">
+							<i class="icon-note"></i> ذخیره
+						</button>
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</div>

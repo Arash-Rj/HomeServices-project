@@ -90,7 +90,7 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Customer
             var customerdtos = new List<CustomerDto>();
             try
             {
-               var customers = await _appDbContext.AppCustomers
+               var customers = await _appDbContext.AppCustomers.Where(c => c.IsActive == true)
                     .Select(e => new { e.Id, e.UserName, e.PhoneNumber, e.Email, e.Requests.Count, e.Province })
                     .ToListAsync(cancellationToken);
                 foreach (var customer in customers)
@@ -118,7 +118,7 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Customer
             return customerdtos;
         }
 
-        public async Task<Result> Update(CustomerDto objct, CancellationToken cancellationToken)
+        public async Task<Result> Update(UpdateCustomerDto objct, CancellationToken cancellationToken)
         {
             try
             {
@@ -129,6 +129,9 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Customer
                 customer.Email = objct.Email;
                 customer.PhoneNumber = objct.Phone;
                 customer.Province = objct.Province;
+                customer.Address = objct.Address;
+                customer.CardNumber = objct.CardNumber;
+                customer.IsActive = objct.IsActive;
                 var res =await _appDbContext.SaveChangesAsync(cancellationToken);
             }
             catch(Exception ex)
@@ -136,6 +139,34 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Customer
                 return new Result(false, ex.Message);
             }
             return new Result(true, "تغییر مشتری با موفقیت انجام شد.");
+        }
+
+        public async Task<UpdateCustomerDto?> GetDetailedInfo(int id, CancellationToken cancellationToken)
+        {
+            var updateCustomerdto = new UpdateCustomerDto();
+            try
+            {
+                var customer = await _appDbContext.AppCustomers
+                     .Select(e => new { e.Id, e.UserName, e.PhoneNumber, e.Email, e.IsActive , e.Address, e.Province , e.CardNumber })
+                     .FirstOrDefaultAsync(u => u.Id.Equals(id), cancellationToken);
+                updateCustomerdto.Id = customer.Id;
+                updateCustomerdto.Email = customer.Email;
+                updateCustomerdto.Phone = customer.PhoneNumber;
+                updateCustomerdto.Name = customer.UserName;
+                updateCustomerdto.Province = customer.Province;
+                updateCustomerdto.Address = customer.Address;
+                updateCustomerdto.IsActive = customer.IsActive;
+                updateCustomerdto.CardNumber = customer.CardNumber;
+            }
+            catch (NullReferenceException ex)
+            {
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return updateCustomerdto;
         }
     }
 }

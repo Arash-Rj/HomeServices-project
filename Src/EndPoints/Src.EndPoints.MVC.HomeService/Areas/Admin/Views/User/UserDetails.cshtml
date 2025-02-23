@@ -1,0 +1,110 @@
+﻿@using AppFrameWork
+@using Src.Domain.Core.AAM.ManageUser.Enums
+@using Src.EndPoints.MVC.HomeService.Areas.Admin.Models
+@model UpdateUserModel
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title-wrap bar-warning">
+                <div class="card-title">اطلاعات جزئی</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="card-block">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                        <ul class="no-list-style">
+                            <li class="mb-2">
+                                <span class="primary text-bold-500"><a><i class="ft-home font-small-3"></i> نام</a></span>
+                                <span class="line-height-2 display-block overflow-hidden">@Model.Name</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="primary text-bold-500"><a><i class="ft-home font-small-3"></i> آدرس ایمیل</a></span>
+                                <span class="line-height-2 display-block overflow-hidden">@Model.Email</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                        <ul class="no-list-style">
+                            <li class="mb-2">
+                                <span class="primary text-bold-500"><a><i class="ft-home font-small-3"></i> شماره تلفن</a></span>
+                                <span class="line-height-2 display-block overflow-hidden">@Model.Phone</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="primary text-bold-500"><a><i class="ft-home font-small-3"></i> استان</a></span>
+                                <span class="line-height-2 display-block overflow-hidden">@Model.Province</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                        <ul class="no-list-style">
+                            <li class="mb-2">
+                                <span class="primary text-bold-500"><a><i class="ft-home font-small-3"></i>شمار کارت</a></span>
+                                <span class="line-height-2 display-block overflow-hidden">@StaticMethods.FormatStringInGroups(Model.CardNumber,4)</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="primary text-bold-500"><a><i class="ft-home font-small-3"></i> آدرس ایمیل</a></span>
+                                <span class="line-height-2 display-block overflow-hidden">@Model.Email</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                        <ul class="no-list-style">
+                            <li class="mb-2">
+                                <span class="primary text-bold-500"><a><i class="ft-home font-small-3"></i> وضعیت</a></span>
+                                @if(Model.IsActive)
+                                {
+                                    <span class="line-height-2 display-block overflow-hidden">فعال</span>
+                                }
+                                else
+                                {
+                                    <span class="line-height-2 display-block overflow-hidden">غیرفعال</span>
+                                }
+                            </li>
+                        </ul>
+                    </div>
+                    @if(Model.Role == RoleEnum.Customer)
+                    {
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                            <ul class="no-list-style">
+                                <li class="mb-2">
+                                    <span class="primary text-bold-500"><a><i class="ft-home font-small-3"></i> آدرس </a></span>
+                                    <span class="line-height-2 display-block overflow-hidden">@Model.Address</span>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                    @if(Model.Role == RoleEnum.Expert)
+                    {
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                            <ul class="no-list-style">
+                                <li class="mb-2">
+                                    <span class="primary text-bold-500"><a><i class="ft-home font-small-3"></i>آدرس محل کار</a></span>
+                                    <span class="line-height-2 display-block overflow-hidden">@Model.WorkPlaceAddress</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                            <ul class="no-list-style">
+                                <li class="mb-2">
+                                    <span class="primary text-bold-500"><a><i class="ft-home font-small-3"></i> بیوگرافی</a></span>
+                                    <span class="line-height-2 display-block overflow-hidden">@Model.Bioghraphy</span>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                  <div class="col-lg-12 col-md-6 col-sm-12 col-12 text-center">
+                      @if(Model.Role == RoleEnum.Customer)
+                      {
+                            <a class="btn btn-danger btn-large" asp-area="Admin" asp-action="AllCustomers" asp-controller="User"> بازگشت </a>
+                      }
+                      @if (Model.Role == RoleEnum.Expert)
+                      {
+                            <a class="btn btn-danger btn-large" asp-area="Admin" asp-action="AllExperts" asp-controller="User"> بازگشت </a>
+                      }
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

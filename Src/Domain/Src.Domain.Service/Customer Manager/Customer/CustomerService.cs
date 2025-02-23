@@ -37,6 +37,11 @@ namespace Src.Domain.Service.Customer_Manager.Customer
             return customerDtos;
         }
 
+        public async Task<UpdateCustomerDto?> GetDetailedInfo(int id, CancellationToken cancellationToken)
+        {
+            return await _customerRepository.GetDetailedInfo(id, cancellationToken);
+        }
+
         public async Task<CustomerDto?> GetInfo(int id, CancellationToken cancellationToken)
         {
             var customerDto = new CustomerDto();
@@ -55,7 +60,7 @@ namespace Src.Domain.Service.Customer_Manager.Customer
             return customerDto;
         }
 
-        public async Task<Result> Update(CustomerDto objct, CancellationToken cancellationToken)
+        public async Task<Result> Update(UpdateCustomerDto objct, CancellationToken cancellationToken)
         {
             return await _customerRepository.Update(objct, cancellationToken);
         }

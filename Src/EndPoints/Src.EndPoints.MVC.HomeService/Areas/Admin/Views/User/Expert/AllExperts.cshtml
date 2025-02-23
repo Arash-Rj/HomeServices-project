@@ -1,4 +1,5 @@
-﻿@using Src.Domain.Core.Expert_Manager.Expert.Dtos
+﻿@using Src.Domain.Core.AAM.ManageUser.Enums
+@using Src.Domain.Core.Expert_Manager.Expert.Dtos
 @model List<ExpertDto>
 <div class="row match-height">
     <div class="col-12 col-xl-12" id="recent-sales">
@@ -6,7 +7,7 @@
             <div class="card-header">
                 <div class="card-title-wrap bar-primary">
                     <h4 class="card-title">
-                        مشتریان
+                        کارشناسان
                     </h4>
                 </div>
                 <a class="heading-elements-toggle">
@@ -24,6 +25,7 @@
                                 </th>
                                 <th class="border-top-0">ایمیل</th>
                                 <th class="border-top-0">شماره موبایل</th>
+                                <th class="border-top-0">استان</th>
                                 <th class="border-top-0">تعداد سفارش ها</th>
                             </tr>
                         </thead>
@@ -36,8 +38,27 @@
                                     </td>
                                     <td class="text-truncate">@expert.Name</td>
                                     <td class="text-truncate">@expert.Email</td>
-                                    <td class="text-truncate">@expert.Phone</td>
-                                    <td class="text-truncate">@expert.ProposalCount</td>
+                                    @if (expert.Phone == null)
+                                    {
+                                        <td class="text-truncate text-danger">شماره موبایل ثبت نشده است.</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-truncate">@expert.Phone</td>
+                                    }
+                                    <td class="text-truncate">@expert.Province</td>
+                                    @if (expert.Phone == null)
+                                    {
+                                        <td class="text-truncate text-danger">پیشنهادی ثبت نشده.</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-truncate">@expert.ProposalCount</td>
+                                    }
+                                    <td class="text-truncate">
+                                        <a class="btn btn-success btn-sm" asp-area="Admin" asp-action="Update" asp-controller="User" asp-route-id="@expert.Id"> ویرایش </a>
+                                        <a class="btn btn-warning btn-sm" asp-area="Admin" asp-action="UserDetails" asp-controller="User" asp-route-id="@expert.Id" asp-route-role="@RoleEnum.Expert"> جزئیات </a>
+                                    </td>
                                 </tr>
                             }
                         </tbody>

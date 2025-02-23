@@ -12,6 +12,7 @@ namespace Src.Domain.Core.Customer_Manager.Customer.Service
     {
         public Task<CustomerDto?> GetInfo(int id, CancellationToken cancellationToken);
         public Task<List<CustomerDto>?> GetAllInfo(CancellationToken cancellationToken);
-        public Task<Result> Update(CustomerDto objct, CancellationToken cancellationToken);
+        public Task<Result> Update(UpdateCustomerDto objct, CancellationToken cancellationToken);
+        public Task<UpdateCustomerDto?> GetDetailedInfo(int id, CancellationToken cancellationToken);
     }
 }

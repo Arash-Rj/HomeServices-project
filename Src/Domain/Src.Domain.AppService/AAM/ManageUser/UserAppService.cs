@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Src.Domain.Core.AAM.ManageUser.Entities;
 using Src.Domain.Core.AAM.ManageUser.AppService;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Src.Domain.Core.AAM.ManageUser.Service;
 using Microsoft.EntityFrameworkCore;
 using Src.Domain.Core.Base.Entities;
@@ -27,19 +22,32 @@ namespace Src.Domain.AppService.AAM.ManageUser.Entities
             _userService = userService;
         }
 
-        public Task<List<UserDto>> GetAllUsers()
+        public Task<List<UserDto>> GetAllUsers(CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public Task<int> GetCount()
+        public Task<int> GetCount(CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public Task<UserDto> GetUserById(int id)
+        public async Task<User> GetById(int id,CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var user = new User();
+            try
+            {
+                user = await _userService.GetById(id, cancellationToken);
+            }
+            catch (NullReferenceException ex)
+            {
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return user;
         }
 
         public async Task<Result> Login(string username, string password, bool rememberMe,CancellationToken cancellationToken)
@@ -72,13 +80,13 @@ namespace Src.Domain.AppService.AAM.ManageUser.Entities
                 {
                     if (model.Role == RoleEnum.Customer)
                     {
-                        var customer = new AppCustomer { Email = model.Email, UserName = model.UserName };
+                        var customer = new AppCustomer { Email = model.Email, UserName = model.UserName, IsActive = true };
                         result = await _userManager.CreateAsync(customer, model.Password);
                         await _userManager.AddToRoleAsync(customer, model.Role.ToString());
                     }
                     if (model.Role == RoleEnum.Expert)
                     {
-                        var expert = new AppExpert { Email = model.Email, UserName = model.UserName };
+                        var expert = new AppExpert { Email = model.Email, UserName = model.UserName, IsActive = true };
                         result = await _userManager.CreateAsync(expert, model.Password);
                         await _userManager.AddToRoleAsync(expert, model.Role.ToString());
                     }
@@ -99,9 +107,10 @@ namespace Src.Domain.AppService.AAM.ManageUser.Entities
             }
         }
 
-        public Task<bool> Update(UserDto model, CancellationToken cancellationToken)
+        public async Task<RoleEnum?> GetRole(int id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _userService.GetRole(id, cancellationToken);
         }
+
     }
 }

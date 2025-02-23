@@ -16,6 +16,7 @@ namespace Src.Domain.Core.Expert_Manager.Expert.Repository
         public Task<Result> Delete(int id, CancellationToken cancellationToken);
         public Task<ExpertDto?> GetInfo(int id, CancellationToken cancellationToken);
         public Task<List<ExpertDto>?>GetAllInfo(CancellationToken cancellationToken);
-        public Task<Result> Update(ExpertDto objct, CancellationToken cancellationToken);
+        public Task<Result> Update(UpdateExpertDto objct, CancellationToken cancellationToken);
+        public Task<UpdateExpertDto?> GetDetailedInfo(int id, CancellationToken cancellationToken);
     }
 }

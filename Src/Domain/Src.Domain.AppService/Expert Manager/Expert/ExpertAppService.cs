@@ -36,6 +36,11 @@ namespace Src.Domain.AppService.Expert_Manager.Expert
             return expertDto;
         }
 
+        public async Task<UpdateExpertDto?> GetDetailedInfo(int id, CancellationToken cancellationToken)
+        {
+            return await _expertService.GetDetailedInfo(id, cancellationToken);
+        }
+
         public async Task<ExpertDto?> GetInfo(int id, CancellationToken cancellationToken)
         {
             var expertDto = new ExpertDto();
@@ -54,7 +59,7 @@ namespace Src.Domain.AppService.Expert_Manager.Expert
             return expertDto;
         }
 
-        public async Task<Result> Update(ExpertDto objct, CancellationToken cancellationToken)
+        public async Task<Result> Update(UpdateExpertDto objct, CancellationToken cancellationToken)
         {
             return await _expertService.Update(objct, cancellationToken);
         }

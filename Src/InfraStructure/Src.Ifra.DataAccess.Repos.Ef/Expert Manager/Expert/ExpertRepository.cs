@@ -82,7 +82,7 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.Expert
             var expertdtos = new List<ExpertDto>();
             try
             {
-               var exprets = await _appDbContext.AppExperts
+               var exprets = await _appDbContext.AppExperts.Where(c => c.IsActive == true)
                     .Select(e => new {e.Id , e.UserName , e.PhoneNumber , e.Email , e.Proposals.Count , e.Province})
                     .ToListAsync(cancellationToken);
                 foreach (var expert in exprets)
@@ -110,7 +110,7 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.Expert
             return expertdtos;
         }
 
-        public async Task<Result> Update(ExpertDto objct, CancellationToken cancellationToken)
+        public async Task<Result> Update(UpdateExpertDto objct, CancellationToken cancellationToken)
         {
             try
             {
@@ -121,6 +121,10 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.Expert
                 expert.Email = objct.Email;
                 expert.PhoneNumber = objct.Phone;
                 expert.Province = objct.Province;
+                expert.Bioghraphy = objct.Bioghraphy;
+                expert.CardNumber = objct.CardNumber;
+                expert.WorkPlaceAddress = objct.WorkPlaceAddress;
+                expert.IsActive = objct.IsActive;
                 var res = await _appDbContext.SaveChangesAsync(cancellationToken);
             }
             catch (Exception ex)
@@ -128,6 +132,38 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.Expert
                 return new Result(false, ex.Message);
             }
             return new Result(true, "تغییر کارشناس با موفقیت انجام شد.");
+        }
+
+        public async Task<UpdateExpertDto?> GetDetailedInfo(int id, CancellationToken cancellationToken)
+        {
+            var updateExpertdto = new UpdateExpertDto();
+            try
+            {
+                var expert = await _appDbContext.AppExperts
+                     .Select(e => new { e.Id, e.UserName, e.PhoneNumber, e.Email,
+                         e.CardNumber, e.Province , e.Bioghraphy , e.IsActive , e.WorkPlaceAddress })
+                     .FirstAsync(u => u.Id.Equals(id), cancellationToken);
+                #region Mapping
+                updateExpertdto.Id = expert.Id;
+                updateExpertdto.Email = expert.Email;
+                updateExpertdto.Phone = expert.PhoneNumber;
+                updateExpertdto.Name = expert.UserName;
+                updateExpertdto.Province = expert.Province;
+                updateExpertdto.CardNumber = expert.CardNumber;
+                updateExpertdto.WorkPlaceAddress = expert.WorkPlaceAddress;
+                updateExpertdto.Bioghraphy = expert.Bioghraphy;
+                updateExpertdto.IsActive = expert.IsActive;
+                #endregion
+            }
+            catch (NullReferenceException ex)
+            {
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return updateExpertdto;
+            }
+            return updateExpertdto;
         }
     }
 }
