@@ -1,0 +1,144 @@
+﻿@using Framework
+@using Src.Domain.Core.Customer_Manager.Customer.Dtos
+@using Src.Domain.Core.Customer_Manager.Customer.Enums
+@model List<RequestInfoDto>
+<div class="row match-height">
+    <div class="col-12 col-xl-12" id="recent-sales">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title-wrap bar-primary">
+                    <h4 class="card-title">
+                        سفارش ها
+                    </h4>
+                </div>
+                <a class="heading-elements-toggle">
+                    <i class="la la-ellipsis-v font-medium-3"></i>
+                </a>
+                @if (TempData["SuccessMessage"] is not null)
+                {
+                    <div id="alertbox" class="alert alert-success" role="alert">@TempData["SuccessMessage"]</div>
+                }
+                @if (TempData["ErrorMessage"] is not null)
+                {
+                    <div id="alertbox" class="alert alert-danger" role="alert">@TempData["ErrorMessage"]</div>
+                }
+            </div>
+            <div class="card-content mt-1">
+                <div class="table-responsive">
+                    <table class="table table-hover table-xl mb-0" id="recent-orders">
+                        <thead>
+                            <tr>
+                                <th class="border-top-0">شناسه</th>
+                                <th class="border-top-0"> نام مشتری</th>
+                                <th class="border-top-0">سرویس درخواستی</th>
+                                <th class="border-top-0">تاریخ انجام سفارش</th>
+                                <th class="border-top-0">ساعت انجام سفارش</th>
+                                <th class="border-top-0">وضعیت</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var request in Model)
+                            {
+                                <tr>
+                                    <td class="text-truncate align-content-center ">
+                                        <button class="btn btn-sm btn-outline-success round mb-0" type="button">@request.Id</button>
+                                    </td>
+                                    <td class="text-truncate align-content-center ">@request.CustomerName</td>
+                                    <td class="text-truncate  align-content-center">@request.HomeServiceName</td>
+                                    <td class="text-truncate  align-content-center">@request.ExecutionDate.ToDateTime(TimeOnly.MinValue).ToPersianString()</td>
+                                    <td class="text-truncate  align-content-center">@request.ExecutionTime.ToTimeSpan()</td>
+                                    @if(request.IsActive)
+                                    {
+                                        <td class="text-truncate  align-content-center">فعال</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-truncate  align-content-center">غیرفعال</td>
+                                    }
+                                    <td class="text-truncate">
+                                        <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#@request.CustomerName">
+                                            جزئیات بیشتر
+                                        </button>
+                                        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#@request.Status">
+                                            تغییر وضعیت
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@foreach (var req in Model)
+{
+    <div class="modal fade text-left" id="@req.CustomerName" tabindex="-1" role="dialog" aria-labelledby="myModalLabel34" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="myModalLabel34">جزئیات سفارش</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        <label>وضعیت</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="readonlyInput" readonly="readonly" value="@req.Status.GetEnumDisplayName()">
+                        </div>
+                        <label>جزئیات</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="readonlyInput" readonly="readonly" value="@req.Details">
+                        </div>
+                        <label>عکس ها</label>
+                        <div class="form-group">
+                            @foreach (var img in req.Images)
+                            {
+                                <span class="avatar avatar-xs">
+                                    <img class="box-shadow-2" src="@img.Path" alt="avatar">
+                                </span>
+                            }
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="reset" class="btn btn-danger btn-lg" data-dismiss="modal" value="بستن">
+                        <input asp-action="" asp-controller="" type="submit" class="btn btn-outline-primary btn-lg" value="مشاهده پییشنهادات">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+@foreach(var req in Model){
+<div class="modal fade text-left" id="@req.Status" tabindex="-1" role="dialog" aria-labelledby="myModalLabel34" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myModalLabel34">تغییر وضعیت سفارش با شناسه @req.Id</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form asp-action="ChangeStatus" asp-route-id="@req.Id" method="post">
+                <div class="modal-body">
+                    <label>وضعیت جدید</label>
+                    <select id="projectinput5" class="form-control" name="reqStatus">
+                        <option value="none" selected="" disabled="">انتخاب کنید</option>
+                        <option value="1">@ReqStatus.Success.GetEnumDisplayName()</option>
+                        <option value="2">@ReqStatus.Failed.GetEnumDisplayName()</option>
+                        <option value="3">@ReqStatus.Pending.GetEnumDisplayName()</option>
+                        <option value="4">@ReqStatus.AwaitingExpert.GetEnumDisplayName()</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <input type="reset" class="btn btn-danger btn-lg" data-dismiss="modal" value="بستن">
+                    <button type="submit" class="btn btn-outline-primary btn-lg">تایید</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+}

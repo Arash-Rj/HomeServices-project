@@ -1,6 +1,7 @@
 ﻿using Src.Domain.Core.Base.Entities;
 using Src.Domain.Core.Customer_Manager.Customer.Dtos;
 using Src.Domain.Core.Customer_Manager.Customer.Entities;
+using Src.Domain.Core.Customer_Manager.Customer.Enums;
 using Src.Domain.Core.Customer_Manager.Customer.Repository;
 using Src.Domain.Core.Customer_Manager.Customer.Service;
 using Src.Domain.Core.Expert_Manager.Expert.Dtos;
@@ -22,6 +23,19 @@ namespace Src.Domain.Service.Customer_Manager.Request
         public async Task<Result> Add(CreateRequestDto objct, CancellationToken cancellationToken)
         {
             return await _requestRepository.Create(objct, cancellationToken);
+        }
+
+        public async Task<Result> ChangeStatus(int id, ReqStatus reqStatus, CancellationToken cancellationToken)
+        {
+            try
+            {
+                return await _requestRepository.ChangeStatus(id,reqStatus,cancellationToken);
+
+            }
+            catch (Exception ex)
+            {
+               return new Result(false, ex.Message);    
+            }
         }
 
         public async Task<Result> Delete(int id, CancellationToken cancellationToken)

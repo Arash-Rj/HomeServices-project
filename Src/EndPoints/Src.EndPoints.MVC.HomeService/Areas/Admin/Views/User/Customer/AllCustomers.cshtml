@@ -44,28 +44,28 @@
                                     <td>
                                         <button class="btn btn-sm btn-outline-success round mb-0" type="button">@customer.Id</button>
                                     </td>
-                                    <td class="text-truncate">@customer.Name</td>
-                                    <td class="text-truncate">@customer.Email</td>
+                                    <td class="text-truncate align-content-center">@customer.Name</td>
+                                    <td class="text-truncate align-content-center">@customer.Email</td>
                                     @if(customer.Phone == null)
                                     {
-                                        <td class="text-truncate text-danger">شماره موبایل ثبت نشده است.</td>
+                                        <td class="text-truncate text-danger align-content-center">شماره موبایل ثبت نشده است.</td>
                                     }
                                     else
                                     {
-                                    <td class="text-truncate">@customer.Phone</td>
+                                        <td class="text-truncate align-content-center">@customer.Phone</td>
                                     }
-                                    <td class="text-truncate">@customer.Province</td>
+                                    <td class="text-truncate align-content-center">@customer.Province</td>
                                     @if (customer.RequestCount == 0)
                                     {
-                                        <td class="text-truncate text-danger">سفارشی ثبت نشده.</td>
+                                        <td class="text-truncate text-danger align-content-center">سفارشی ثبت نشده.</td>
                                     }
                                     else
                                     {
-                                        <td class="text-truncate">@customer.RequestCount</td>
+                                        <td class="text-truncate align-content-center">@customer.RequestCount</td>
                                     }
-                                    <td class="text-truncate">
-                                        <a class="btn btn-success btn-sm" asp-area="Admin" asp-action="Update" asp-controller="User" asp-route-id="@customer.Id"> ویرایش </a>
-                                        <a class="btn btn-warning btn-sm" asp-area="Admin" asp-action="UserDetails" asp-controller="User" asp-route-id="@customer.Id" asp-route-role="@RoleEnum.Customer"> جزئیات </a>
+                                    <td class="text-truncate align-content-center">
+                                        <a class="btn btn-success " asp-area="Admin" asp-action="Update" asp-controller="User" asp-route-id="@customer.Id"> ویرایش </a>
+                                        <a class="btn btn-warning " asp-area="Admin" asp-action="UserDetails" asp-controller="User" asp-route-id="@customer.Id" asp-route-role="@RoleEnum.Customer"> جزئیات </a>
                                     </td>
                                 </tr>
                             }

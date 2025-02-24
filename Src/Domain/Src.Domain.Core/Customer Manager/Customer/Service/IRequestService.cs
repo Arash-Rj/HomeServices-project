@@ -1,6 +1,7 @@
 ﻿using Src.Domain.Core.Base.Entities;
 using Src.Domain.Core.Customer_Manager.Customer.Dtos;
 using Src.Domain.Core.Customer_Manager.Customer.Entities;
+using Src.Domain.Core.Customer_Manager.Customer.Enums;
 using Src.Domain.Core.Expert_Manager.Expert.Dtos;
 using System;
 using System.Collections.Generic;
@@ -18,5 +19,6 @@ namespace Src.Domain.Core.Customer_Manager.Customer.Service
         public Task<AppRequest?> GetInfo(int id, CancellationToken cancellationToken);
         public Task<Result> Validation(CreateRequestDto objct, CancellationToken cancellationToken);
         public Task<List<RequestInfoDto>?> GetAllInfo(CancellationToken cancellationToken);
+        public Task<Result> ChangeStatus(int id, ReqStatus reqStatus, CancellationToken cancellationToken);
     }
 }

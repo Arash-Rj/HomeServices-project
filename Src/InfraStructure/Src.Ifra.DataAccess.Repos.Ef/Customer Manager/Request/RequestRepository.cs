@@ -114,7 +114,7 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Request
                         Status = request.Status,
                         Images = request.Images,
                         CustomerName = request.UserName,
-                        HomeServiceName = request.UserName,
+                        HomeServiceName = request.Title,
                      });
                 }
             }
@@ -134,7 +134,7 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Request
             
             try
             {
-                var request = _appDbContext.Requests.FirstOrDefault(r => r.Id.Equals(objct.Id));
+                var request = await _appDbContext.Requests.FirstOrDefaultAsync(r => r.Id.Equals(objct.Id));
                 if (request == null)
                     return new Result(false, "درخواستی با این ایدی پیدا نشد!");
 
@@ -147,6 +147,32 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Request
                 request.Images = objct.Images;
                 #endregion
 
+                _appDbContext.Requests.Update(request);
+                var res = await _appDbContext.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                return new Result(false, ex.Message);
+            }
+            return new Result(true, "تغییر سفارش با موفقیت انجام شد.");
+        }
+
+        public async Task<Result> ChangeStatus(int id, ReqStatus reqStatus, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var request = await _appDbContext.Requests.FirstOrDefaultAsync(r => r.Id.Equals(id));
+                if (request == null)
+                    return new Result(false, "درخواستی با این ایدی پیدا نشد!");
+                request.Status=reqStatus;
+                if(reqStatus==ReqStatus.Success)
+                {
+                    request.IsActive=false;
+                }
+                else
+                {
+                    request.IsActive = true;
+                }
                 _appDbContext.Requests.Update(request);
                 var res = await _appDbContext.SaveChangesAsync(cancellationToken);
             }
