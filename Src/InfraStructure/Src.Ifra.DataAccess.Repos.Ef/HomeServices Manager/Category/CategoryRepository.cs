@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Src.Domain.Core.Base.Entities;
+using Src.Domain.Core.HomeServices_Manager.HomeServices.Dtos;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Entities;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Repository;
 using Src.Infra.DataBase.SqlServer.Ef.DbContext;
@@ -80,6 +81,36 @@ namespace Src.Ifra.DataAccess.Repos.Ef.HomeServices_Manager.Category
                 return null;
             }
             return categories;
+        }
+
+        public async Task<List<SubcategoryDto>?> GetSubs(int id, CancellationToken cancellationToken)
+        {
+            var subcategoryDtos = new List<SubcategoryDto>();
+            try
+            {
+               var subcategories = await _appDbContext.SubCategories.Where(s => s.CategoryId == id)
+                    .Select(s => new { s.ImagePath, s.Id ,s.Category.Title,s.Name }).ToListAsync();
+                foreach(var sub in subcategories)
+                {
+                    var subcategoryDto = new SubcategoryDto()
+                    {
+                        Id = sub.Id,
+                        CategoryName = sub.Title,
+                        ImagePath = sub.ImagePath,
+                        Name = sub.Name,    
+                    };
+                    subcategoryDtos.Add(subcategoryDto);
+                }
+            }
+            catch (NullReferenceException ex)
+            {
+                return null;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            return subcategoryDtos;
         }
 
         public async Task<Result> Update(CancellationToken cancellationToken, string Title, string? Image = null)

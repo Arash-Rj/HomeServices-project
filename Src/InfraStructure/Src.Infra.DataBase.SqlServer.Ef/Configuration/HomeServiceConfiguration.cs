@@ -22,15 +22,15 @@ namespace Src.Infra.DataBase.SqlServer.Ef.Configuration
 
             builder.Property(h => h.Title).HasMaxLength(30);
 
-            builder.Property(h => h.Description).HasMaxLength(100);
+            builder.Property(h => h.Description).HasMaxLength(300);
             builder.HasData(
                 new List<HomeService>
                 {
-                    new HomeService{Id=1, IsActive = true , BasePrice=400 ,
+                    new HomeService{Id=1, IsActive = true , BasePrice=400000 ,
                         Description="ایزوله سازی سطوح سیمانی و جلوگیری از نفوذ اب و رطوبت به دیوار ها و کف." ,
                         SubCategoryId =24 , Title ="آب بندی" , Views=1 , ImagePath= "اب بندی.jpg"},
 
-                    new HomeService{Id=2, IsActive = true , BasePrice=300 ,
+                    new HomeService{Id=2, IsActive = true , BasePrice=300000 ,
                         Description="ترمیم ترک های دیوار و سقف به منظور جلوگیری از اسیب های ناشی از نشست ساختمان یا رطوبت." , SubCategoryId =22 ,
                         Title ="ترمیم ترک" , Views=1 , ImagePath= "ترمیم ترک.jpg"},
                 }

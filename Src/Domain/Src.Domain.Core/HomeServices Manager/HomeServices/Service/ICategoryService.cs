@@ -1,6 +1,7 @@
 ﻿using Src.Domain.Core.Base.Entities;
 using Src.Domain.Core.Customer_Manager.Customer.Dtos;
 using Src.Domain.Core.Customer_Manager.Customer.Entities;
+using Src.Domain.Core.HomeServices_Manager.HomeServices.Dtos;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Entities;
 using System;
 using System.Collections.Generic;
@@ -18,5 +19,6 @@ namespace Src.Domain.Core.HomeServices_Manager.HomeServices.Service
         public Task<Category?> GetInfo(int id, CancellationToken cancellationToken);
         public Task<Result> Validation(Category objct, CancellationToken cancellationToken);
         public Task<List<Category>?> GetAllInfo(CancellationToken cancellationToken);
+        public Task<List<SubcategoryDto>?> GetSubs(int id, CancellationToken cancellationToken);
     }
 }

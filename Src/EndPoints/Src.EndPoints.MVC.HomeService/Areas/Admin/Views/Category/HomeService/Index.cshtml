@@ -1,1 +1,165 @@
-﻿
+﻿@using AppFrameWork
+@using Src.EndPoints.MVC.HomeService.Areas.Admin.Models
+@model HomeServiceModel
+@{
+    ViewData["Title"] = "لیست سرویس های خانه";
+}
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title-wrap bar-success">
+                <h4 class="card-title">@ViewData["Title"]</h4>
+            </div>
+        </div>
+        <div class="card-body collapse show">
+            <div class="card-block card-dashboard">
+                <p class="card-text">
+                 سرویس های خانه موجود. با زدن دکمه ویرایش میتوانید عملیات هایی همچون فعال و غیرفعال کردن سرویس ها را انجام دهید.
+                </p>
+                @if (TempData["SuccessMessage"] is not null)
+                {
+                    <div id="alertbox" class="alert alert-success" role="alert">@TempData["SuccessMessage"]</div>
+                }
+                @if (TempData["ErrorMessage"] is not null)
+                {
+                    <div id="alertbox" class="alert alert-danger" role="alert">@TempData["ErrorMessage"]</div>
+                }
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#Create">
+                            افزودن سرویس خانه جدید
+                        </button>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-striped table-hover table-bordered dom-jQuery-events dataTable" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="نام: activate to sort column descending" style="width: 156.913px;">
+                                            شناسه
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="موقعیت: activate to sort column ascending" style="width: 292.775px;">
+                                            عکس
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="اداره: activate to sort column ascending" style="width: 104.525px;">
+                                            عنوان زیرمجموعه
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="سن: activate to sort column ascending" style="width: 56.7625px;">
+                                            عنوان
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="تاریخ شروع: activate to sort column ascending" style="width: 118.613px;">
+                                            وضعیت
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="حقوق: activate to sort column ascending" style="width: 132.812px;">
+                                            قیمت پایه
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach(var hom in Model.HomeServices)
+                                    {
+                                        <tr role="row" class="odd">
+                                            <td class="sorting_1">@hom.Id</td>
+                                            <td>
+                                                @if (hom.ImagePath is not null)
+                                                {
+                                                    <img style="height:100px; width:50%" id="navbar-avatar" src="~/@hom.ImagePath" alt="avatar" />
+                                                }
+                                                else
+                                                {
+                                                    <img style="height:100px; width:50%" id="navbar-avatar" src="~/Images/HomeServices/placeholder.jpg" alt="avatar" />
+                                                }
+                                            </td>
+                                            <td>@hom.SubCategoryName</td>
+                                            <td>@hom.Title</td>
+                                            @if(hom.IsActive)
+                                            {
+                                                <td>
+                                                    فعال
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    غیر فعال
+                                                </td>
+                                            }
+                                            <td>@StaticMethods.FormatStringInGroups(hom.BasePrice.ToString(), 3, true) تومان</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th rowspan="1" colspan="1">
+                                            شناسه
+                                        </th>
+                                        <th rowspan="1" colspan="1">
+                                            عنوان
+                                        </th>
+                                        <th rowspan="1" colspan="1">
+                                            عنوان زیرمجموعه
+                                        </th>
+                                        <th rowspan="1" colspan="1">
+                                            قیمت پایه
+                                        </th>
+                                        <th rowspan="1" colspan="1">
+                                            عکس
+                                         </th>
+                                        <th rowspan="1" colspan="1">
+                                            وضعیت
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade text-left" id="Create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel34" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myModalLabel34">اضافه کردن سرویس خانه جدید</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form enctype="multipart/form-data" asp-action="Create" method="post">
+                <div class="modal-body">
+                    <label>عنوان</label>
+                    <input asp-for="CreateHomeServiceModel.Title" type="text" id="projectinput3" class="form-control" required>
+                     <label>قیمت پایه(تومان)</label>
+                    <input asp-for="CreateHomeServiceModel.BasePrice" type="text" id="priceinput" class="form-control" required>
+                     <label>توضیحات</label>
+                    <textarea asp-for="CreateHomeServiceModel.Description" id="userinput8" rows="4" class="form-control border-primary" required></textarea>
+                    <span class="text-danger m-3" asp-validation-for="@Model.CreateHomeServiceModel.Description"></span>
+                    <label>انتخاب زیر مجموعه</label>
+                    <select asp-for="CreateHomeServiceModel.SubcategoryId" id="projectinput5" class="form-control" required>
+                        <option value="none" selected="" disabled="">انتخاب کنید</option>
+                        @foreach(var sub in Model.Subcategories)
+                        {
+                            <option value="@sub.Id">@sub.Name</option>
+                        }
+                    </select>
+                    <label>افزودن عکس</label>
+                    <input asp-for="CreateHomeServiceModel.ImageFile" type="file" class="form-control-file" id="projectinput7"required>
+                </div>
+                <div class="modal-footer">
+                    <input type="reset" class="btn btn-danger btn-lg" data-dismiss="modal" value="بستن">
+                    <button type="submit" class="btn btn-outline-primary btn-lg">تایید</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('priceinput').addEventListener('input',function(e){
+        let value = e.target.value.replace(/[^0-9]/g,'');
+        if(!value || isNaN(value)) return;
+        let formatted = parseInt(value,10).toLocaleString('en-US');
+        e.target.value = formatted;
+    });
+</script>

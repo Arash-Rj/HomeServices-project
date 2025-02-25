@@ -91,7 +91,7 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Customer
             try
             {
                var customers = await _appDbContext.AppCustomers.Where(c => c.IsActive == true)
-                    .Select(e => new { e.Id, e.UserName, e.PhoneNumber, e.Email, e.Requests.Count, e.Province })
+                    .Select(e => new { e.Id, e.UserName, e.PhoneNumber, e.Email, e.Requests.Count, e.Province, e.ImagePath })
                     .ToListAsync(cancellationToken);
                 foreach (var customer in customers)
                 {
@@ -103,6 +103,7 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Customer
                         Email = customer.Email,
                         RequestCount = customer.Count,
                         Province = customer.Province,
+                        ImagePath = customer.ImagePath
                     };
                     customerdtos.Add(customerdto);
                 }
@@ -147,7 +148,7 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Customer
             try
             {
                 var customer = await _appDbContext.AppCustomers
-                     .Select(e => new { e.Id, e.UserName, e.PhoneNumber, e.Email, e.IsActive , e.Address, e.Province , e.CardNumber })
+                     .Select(e => new { e.Id, e.UserName, e.PhoneNumber, e.Email, e.IsActive , e.Address, e.Province , e.CardNumber, e.ImagePath })
                      .FirstOrDefaultAsync(u => u.Id.Equals(id), cancellationToken);
                 updateCustomerdto.Id = customer.Id;
                 updateCustomerdto.Email = customer.Email;
@@ -157,6 +158,7 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Customer
                 updateCustomerdto.Address = customer.Address;
                 updateCustomerdto.IsActive = customer.IsActive;
                 updateCustomerdto.CardNumber = customer.CardNumber;
+                updateCustomerdto.ImagePath = customer.ImagePath;
             }
             catch (NullReferenceException ex)
             {

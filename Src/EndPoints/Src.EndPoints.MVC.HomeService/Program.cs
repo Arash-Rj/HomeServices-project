@@ -7,6 +7,7 @@ using Src.Domain.AppService.Customer_Manager.Request;
 using Src.Domain.AppService.Expert_Manager.Expert;
 using Src.Domain.AppService.Expert_Manager.Proposal;
 using Src.Domain.AppService.Payment_Manager.Payment;
+using Src.Domain.AppService.Services_Manager.Category;
 using Src.Domain.AppService.Services_Manager.Service;
 using Src.Domain.Core.AAM.ManageAdmin.AppService;
 using Src.Domain.Core.AAM.ManageAdmin.Repository;
@@ -35,12 +36,14 @@ using Src.Domain.Service.Expert_Manager.Expert;
 using Src.Domain.Service.Expert_Manager.Proposal;
 using Src.Domain.Service.HomeServices_Manager.HomeService;
 using Src.Domain.Service.Payment_Manager.Payment;
+using Src.Domain.Service.Services_Manager.Category;
 using Src.Ifra.DataAccess.Repos.Ef.AAM.ManageAdmin;
 using Src.Ifra.DataAccess.Repos.Ef.AAM.ManageUser;
 using Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Customer;
 using Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Request;
 using Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.Expert;
 using Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.Proposal;
+using Src.Ifra.DataAccess.Repos.Ef.HomeServices_Manager.Category;
 using Src.Ifra.DataAccess.Repos.Ef.HomeServices_Manager.HomeServices;
 using Src.Ifra.DataAccess.Repos.Ef.Payment_Manager.Payment;
 using Src.Infra.DataBase.SqlServer.Ef.DbContext;
@@ -96,6 +99,10 @@ builder.Services.AddScoped<IHomeServiceAppService, HomeServiceAppService>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IPaymentAppService, PaymentAppService>();
+
+builder.Services.AddScoped<ICategoryAppService, CategoryAppService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

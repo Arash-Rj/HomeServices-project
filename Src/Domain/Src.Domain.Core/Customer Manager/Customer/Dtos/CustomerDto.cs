@@ -18,5 +18,6 @@ namespace Src.Domain.Core.Customer_Manager.Customer.Dtos
         public ProvinceEnum Province { get; set; }
         public int RequestCount { get; set; }
         public int FeedBackCount { get; set; }
+        public string? ImagePath { get; set; }
     }
 }

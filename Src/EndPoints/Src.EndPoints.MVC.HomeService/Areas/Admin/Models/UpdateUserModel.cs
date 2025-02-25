@@ -18,5 +18,6 @@ namespace Src.EndPoints.MVC.HomeService.Areas.Admin.Models
         public string? Address { get; set; }
 
         public RoleEnum Role { get; set; }
+        public string? ImagePath { get; set; }
     }
 }

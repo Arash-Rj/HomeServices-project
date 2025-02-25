@@ -1,7 +1,12 @@
-﻿using Src.Domain.Core.Base.Entities;
+﻿using Microsoft.AspNetCore.Http;
+using Src.Domain.Core.Base.Entities;
+using Src.Domain.Core.HomeServices_Manager.HomeServices;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.AppService;
+using Src.Domain.Core.HomeServices_Manager.HomeServices.Dtos;
+using Src.Domain.Core.HomeServices_Manager.HomeServices.Entities;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Repository;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Service;
+using Src.Ifra.DataAccess.Repos.Ef.HomeServices_Manager.Category;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,9 +38,9 @@ namespace Src.Domain.AppService.Services_Manager.Category
             try
             {
                 categories = await _categoryService.GetAllInfo(cancellationToken);
-                if (categories is null)
+                foreach (var cat in categories)
                 {
-                    return null;
+                    cat.ImagePath = "Images/Categories/" + cat.ImagePath;
                 }
             }
             catch (Exception ex)
@@ -61,6 +66,20 @@ namespace Src.Domain.AppService.Services_Manager.Category
                 throw ex;
             }
             return category;
+        }
+
+        public async Task<List<SubcategoryDto>?> GetSubs(int id, CancellationToken cancellationToken)
+        {
+            var subs = new List<SubcategoryDto>();
+            try
+            {
+               subs = await _categoryService.GetSubs(id, cancellationToken);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            return subs;
         }
 
         public async Task<Result> Update(CancellationToken cancellationToken, string title, string? imagepath = null)

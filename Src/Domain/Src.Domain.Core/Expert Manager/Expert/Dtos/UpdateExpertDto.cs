@@ -18,5 +18,6 @@ namespace Src.Domain.Core.Expert_Manager.Expert.Dtos
         public string? CardNumber { get; set; }
         public string? Bioghraphy { get; set; }
         public string? WorkPlaceAddress { get; set; }
+        public string? ImagePath { get; set; }
     }
 }

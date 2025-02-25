@@ -1,0 +1,91 @@
+﻿@using Src.Domain.Core.HomeServices_Manager.HomeServices.Entities
+@model List<Category>
+@{
+    ViewData["Title"] = "لیست دسته بندی ها";
+}
+<div class="row match-height">
+    <div class="col-12 col-xl-12" id="recent-sales">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title-wrap bar-primary">
+                    <h4 class="card-title">
+                        @ViewData["Title"]
+                    </h4>
+                </div>
+                <a class="heading-elements-toggle">
+                    <i class="la la-ellipsis-v font-medium-3"></i>
+                </a>
+                @if (TempData["SuccessMessage"] is not null)
+                {
+                    <div id="alertbox" class="alert alert-success" role="alert">@TempData["SuccessMessage"]</div>
+                }
+                @if (TempData["ErrorMessage"] is not null)
+                {
+                    <div id="alertbox" class="alert alert-danger" role="alert">@TempData["ErrorMessage"]</div>
+                }
+            </div>
+            <div class="card-content mt-1">
+                <div class="table-responsive">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#Create">
+                            افزودن دسته بندی جدید
+                        </button>
+                    </div>
+                    <table class="table table-hover table-xl mb-0" id="recent-orders">
+                        <thead>
+                            <tr>
+                                <th class="border-top-0">شناسه</th>
+                                <th class="border-top-0">
+                                    عنوان
+                                </th>
+                                <th class="border-top-0">عکس</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var category in Model)
+                            {
+                                <tr>
+                                    <td class=" align-content-center">
+                                        <button class="btn btn-sm btn-outline-success round mb-0" type="button">@category.Id</button>
+                                    </td>
+                                    <td class="text-truncate align-content-center">@category.Title</td>
+                                    <td class="text-truncate align-content-center">
+                                            <img style="height:100px; width:50%" id="navbar-avatar" src="~/@category.ImagePath" alt="avatar" />                             
+                                    </td>
+                                    <td class="text-truncate align-content-center">
+                                        <a class="btn btn-success " asp-area="Admin" asp-action="Delete" asp-controller="Category" asp-route-id="@category.Id"> حذف </a>
+                                        <a class="btn btn-warning " asp-area="Admin" asp-action="SubCategories" asp-controller="Category" asp-route-id="@category.Id"> زیر مجموعه ها </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade text-left" id="Create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel34" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myModalLabel34">اضافه کردن دسته بندی جدید</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form enctype="multipart/form-data" asp-action="Create" method="post">
+                <div class="modal-body">
+                    <label>عنوان</label>
+                    <input type="text" id="projectinput3" class="form-control" name="title">
+                    <label>افزودن عکس</label>
+                    <input type="file" class="form-control-file" id="projectinput7" name="image">
+                </div>
+                <div class="modal-footer">
+                    <input type="reset" class="btn btn-danger btn-lg" data-dismiss="modal" value="بستن">
+                    <button type="submit" class="btn btn-outline-primary btn-lg">تایید</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

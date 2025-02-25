@@ -1,5 +1,6 @@
 ﻿using Src.Domain.Core.Base.Entities;
 using Src.Domain.Core.HomeServices_Manager.HomeServices;
+using Src.Domain.Core.HomeServices_Manager.HomeServices.Dtos;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Entities;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Repository;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Service;
@@ -66,9 +67,9 @@ namespace Src.Domain.Service.HomeServices_Manager.HomeService
             return homeservicedto;
         }
 
-        public List<SubCategory> SubCategories(CancellationToken cancellationToken)
+        public async Task<List<SubcategoryDto>?> SubCategories(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _homeServiceRepository.GetAllSubCategories(cancellationToken);
         }
 
         public Task<Result> Update(HomeServiceDto objct, CancellationToken cancellationToken)

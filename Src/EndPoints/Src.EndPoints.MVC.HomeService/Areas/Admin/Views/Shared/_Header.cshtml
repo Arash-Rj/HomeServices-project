@@ -1,21 +1,24 @@
-﻿<header>
+﻿@using Framework
+<header>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-faded">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" data-toggle="collapse" class="navbar-toggle d-lg-none float-right"><span class="sr-only">تغییر ناوبری </span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><span class="d-lg-none navbar-right navbar-collapse-toggle"><a class="open-navbar-container"><i class="ft-more-vertical"></i></a></span><a id="navbar-fullscreen" href="javascript:;" class="ml-2 display-inline-block apptogglefullscreen">
-                    <i class="ft-maximize blue-grey darken-4 toggleClass"></i>
-                    <p class="d-none">تمام صفحه</p>
-                </a><a class="mr-2 display-inline-block">
-                    <i class="ft-shopping-cart blue-grey darken-4"></i>
-                    <p class="d-none">سبد خرید</p>
+                <button type="button" data-toggle="collapse" class="navbar-toggle d-lg-none float-right">
+                    <span class="sr-only">تغییر ناوبری </span>
+                    <span class="icon-bar"></span><span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <span class="d-lg-none navbar-right navbar-collapse-toggle">
+                    <a class="open-navbar-container"><i class="ft-more-vertical"></i></a>
+                </span>
+                <a id="navbar-fullscreen" href="javascript:;" class="ml-2 display-inline-block apptogglefullscreen">
                 </a>
-                <div class="dropdown mr-2 display-inline-block">
-                    <a id="apps" href="#" data-toggle="dropdown" class="nav-link position-relative dropdown-toggle"><i class="ft-edit blue-grey darken-4"></i><span class="mx-1 blue-grey darken-4 text-bold-400">برنامه ها</span></a>
-                    <div class="apps dropdown-menu">
-                        <div class="arrow_box"><a href="chat.html" class="dropdown-item py-1"><span>چت</span></a><a href="taskboard.html" class="dropdown-item py-1"><span>وظیفه</span></a><a href="calendar.html" class="dropdown-item py-1"><span>تقویم</span></a></div>
-                    </div>
-                </div>
+                <i class="ft-maximize blue-grey darken-4 toggleClass"></i>
+                <p class="d-none">تمام صفحه</p>
+                 <span>
+                    @DateTime.Now.ToPersianString("dddd, dd MMMM,yyyy")
+                 </span>
             </div>
             <div class="navbar-container">
                 <div id="navbarSupportedContent" class="collapse navbar-collapse">

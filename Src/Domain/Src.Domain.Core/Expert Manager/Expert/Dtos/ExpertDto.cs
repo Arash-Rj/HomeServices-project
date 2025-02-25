@@ -2,6 +2,7 @@
 using Src.Domain.Core.Expert_Manager.Expert.Entities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,5 +17,6 @@ namespace Src.Domain.Core.Expert_Manager.Expert.Dtos
         public string Phone { get; set; }
         public ProvinceEnum Province { get; set; }
         public int ProposalCount { get; set; }
+        public string ImagePath { get; set; }
     }
 }

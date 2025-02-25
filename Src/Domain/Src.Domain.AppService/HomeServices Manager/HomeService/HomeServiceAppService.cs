@@ -1,6 +1,7 @@
 ﻿using Src.Domain.Core.Base.Entities;
 using Src.Domain.Core.HomeServices_Manager.HomeServices;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.AppService;
+using Src.Domain.Core.HomeServices_Manager.HomeServices.Dtos;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Entities;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Service;
 using System;
@@ -34,9 +35,9 @@ namespace Src.Domain.AppService.Services_Manager.Service
             try
             {
                 homeservicedtos = await _homeServiceService.GetAllInfo(cancellationToken);
-                if (homeservicedtos is null)
+                foreach(var hom in homeservicedtos)
                 {
-                    return null;
+                   hom.ImagePath = "Images/HomeServices/" +hom.ImagePath;
                 }
             }
             catch (Exception ex)
@@ -64,9 +65,9 @@ namespace Src.Domain.AppService.Services_Manager.Service
             return homeservicedto;
         }
 
-        public Task<List<SubCategory>?> SubCategories(CancellationToken cancellationToken)
+        public async Task<List<SubcategoryDto>?> SubCategories(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _homeServiceService.SubCategories(cancellationToken);  
         }
 
         public async Task<Result> Update(HomeServiceDto homeServiceDto, CancellationToken cancellationToken)

@@ -17,5 +17,6 @@ namespace Src.Domain.Core.Customer_Manager.Customer.Dtos
         public bool IsActive { get; set; }
         public string? CardNumber { get; set; }
         public string? Address { get; set; }
+        public string? ImagePath { get; set; } 
     }
 }

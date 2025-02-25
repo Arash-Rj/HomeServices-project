@@ -100,6 +100,7 @@ namespace Src.EndPoints.MVC.HomeService.Areas.Admin.Controllers
                     Phone= updateCustomerDto.Phone,
                     Province = updateCustomerDto.Province,
                     Role = RoleEnum.Customer,
+                    ImagePath = updateCustomerDto.ImagePath
                 };
                 #endregion
                 return View("/Areas/Admin/Views/User/Update.cshtml", updateModel);
@@ -120,6 +121,7 @@ namespace Src.EndPoints.MVC.HomeService.Areas.Admin.Controllers
                     Role = RoleEnum.Expert,
                     Bioghraphy = updateExpertDto.Bioghraphy,
                     WorkPlaceAddress = updateExpertDto.WorkPlaceAddress,
+                    ImagePath = updateExpertDto.ImagePath
                 };
                 #endregion
                 return View("/Areas/Admin/Views/User/Update.cshtml", updateModel);
@@ -148,6 +150,7 @@ namespace Src.EndPoints.MVC.HomeService.Areas.Admin.Controllers
                     Name = updateUserModel.Name,
                     Phone = updateUserModel.Phone,
                     Province = updateUserModel.Province,
+                    ImagePath = updateUserModel.ImagePath
                 };
                 #endregion
                 var result = await _customerAppService.Update(updateCustomerDto, cancellationToken);
@@ -176,6 +179,7 @@ namespace Src.EndPoints.MVC.HomeService.Areas.Admin.Controllers
                     Province = updateUserModel.Province,
                     Bioghraphy = updateUserModel.Bioghraphy,
                     WorkPlaceAddress = updateUserModel.WorkPlaceAddress,
+                    ImagePath = updateUserModel.ImagePath
                 };
                 #endregion
                 var result = await _expertAppService.Update(updateExpertDto, cancellationToken);
@@ -211,6 +215,7 @@ namespace Src.EndPoints.MVC.HomeService.Areas.Admin.Controllers
                     Phone = customerDetails.Phone,
                     Province = customerDetails.Province,
                     Role = RoleEnum.Customer,
+                    ImagePath = customerDetails.ImagePath
                 };
                 #endregion
                 return View("/Areas/Admin/Views/User/UserDetails.cshtml", updateModel);
@@ -231,6 +236,7 @@ namespace Src.EndPoints.MVC.HomeService.Areas.Admin.Controllers
                     Role = RoleEnum.Expert,
                     Bioghraphy = expertDetails.Bioghraphy,
                     WorkPlaceAddress = expertDetails.WorkPlaceAddress,
+                    ImagePath = expertDetails.ImagePath
                 };
                 #endregion
                 return View("/Areas/Admin/Views/User/UserDetails.cshtml", updateModel);

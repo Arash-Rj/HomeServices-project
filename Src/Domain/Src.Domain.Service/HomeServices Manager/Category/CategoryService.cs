@@ -1,6 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
 using Src.Domain.Core.Base.Entities;
 using Src.Domain.Core.Expert_Manager.Expert.Dtos;
+using Src.Domain.Core.HomeServices_Manager.HomeServices.Dtos;
+using Src.Domain.Core.HomeServices_Manager.HomeServices.Entities;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Repository;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Service;
 using System;
@@ -62,6 +64,11 @@ namespace Src.Domain.Service.Services_Manager.Category
                 throw ex;
             }
             return category;
+        }
+
+        public async Task<List<SubcategoryDto>?> GetSubs(int id, CancellationToken cancellationToken)
+        {
+            return await _categoryRepository.GetSubs(id,cancellationToken); 
         }
 
         public async Task<Result> Update(CancellationToken cancellationToken, string title, string? imagepath = null)

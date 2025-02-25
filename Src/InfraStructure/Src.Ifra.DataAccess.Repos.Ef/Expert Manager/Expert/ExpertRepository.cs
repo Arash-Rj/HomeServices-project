@@ -83,7 +83,7 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.Expert
             try
             {
                var exprets = await _appDbContext.AppExperts.Where(c => c.IsActive == true)
-                    .Select(e => new {e.Id , e.UserName , e.PhoneNumber , e.Email , e.Proposals.Count , e.Province})
+                    .Select(e => new {e.Id , e.UserName , e.PhoneNumber , e.Email , e.Proposals.Count , e.Province,e.ImagePath})
                     .ToListAsync(cancellationToken);
                 foreach (var expert in exprets)
                 {
@@ -94,7 +94,8 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.Expert
                         Phone = expert.PhoneNumber,
                         Email = expert.Email,
                         ProposalCount = expert.Count,
-                        Province = expert.Province
+                        Province = expert.Province,
+                        ImagePath = expert.ImagePath
                     };
                     expertdtos.Add(expertdto);
                 }
@@ -141,7 +142,7 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.Expert
             {
                 var expert = await _appDbContext.AppExperts
                      .Select(e => new { e.Id, e.UserName, e.PhoneNumber, e.Email,
-                         e.CardNumber, e.Province , e.Bioghraphy , e.IsActive , e.WorkPlaceAddress })
+                         e.CardNumber, e.Province , e.Bioghraphy , e.IsActive , e.WorkPlaceAddress, e.ImagePath })
                      .FirstAsync(u => u.Id.Equals(id), cancellationToken);
                 #region Mapping
                 updateExpertdto.Id = expert.Id;
@@ -153,6 +154,7 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.Expert
                 updateExpertdto.WorkPlaceAddress = expert.WorkPlaceAddress;
                 updateExpertdto.Bioghraphy = expert.Bioghraphy;
                 updateExpertdto.IsActive = expert.IsActive;
+                updateExpertdto.ImagePath = expert.ImagePath;
                 #endregion
             }
             catch (NullReferenceException ex)

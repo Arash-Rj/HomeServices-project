@@ -2,13 +2,16 @@
 @using Src.Domain.Core.Customer_Manager.Customer.Dtos
 @using Src.Domain.Core.Customer_Manager.Customer.Enums
 @model List<RequestInfoDto>
+@{
+    ViewData["Title"] = "لیست سفارش ها";
+}
 <div class="row match-height">
     <div class="col-12 col-xl-12" id="recent-sales">
         <div class="card">
             <div class="card-header">
                 <div class="card-title-wrap bar-primary">
                     <h4 class="card-title">
-                        سفارش ها
+                        @ViewData["Title"]
                     </h4>
                 </div>
                 <a class="heading-elements-toggle">

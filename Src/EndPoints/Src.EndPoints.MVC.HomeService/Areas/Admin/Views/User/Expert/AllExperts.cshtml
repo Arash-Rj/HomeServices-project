@@ -1,13 +1,16 @@
 ﻿@using Src.Domain.Core.AAM.ManageUser.Enums
 @using Src.Domain.Core.Expert_Manager.Expert.Dtos
 @model List<ExpertDto>
+@{
+    ViewData["Title"] = "لیست کارشناس ها";
+}
 <div class="row match-height">
     <div class="col-12 col-xl-12" id="recent-sales">
         <div class="card">
             <div class="card-header">
                 <div class="card-title-wrap bar-primary">
                     <h4 class="card-title">
-                        کارشناسان
+                        @ViewData["Title"]
                     </h4>
                 </div>
                 <a class="heading-elements-toggle">
@@ -24,10 +27,14 @@
             </div>
             <div class="card-content mt-1">
                 <div class="table-responsive">
+                    <div class="col-12">
+                        <a class="btn btn-info btn-sm" asp-area="Admin" asp-action="Create" asp-controller="User"> افزودن کارشناس جدید </a>
+                    </div>
                     <table class="table table-hover table-xl mb-0" id="recent-orders">
                         <thead>
                             <tr>
                                 <th class="border-top-0">شناسه</th>
+                                <th class="border-top-0">عکس</th>
                                 <th class="border-top-0">
                                     نام
                                 </th>
@@ -43,6 +50,16 @@
                                 <tr>
                                     <td>
                                         <button class="btn btn-sm btn-outline-success round mb-0" type="button">@expert.Id</button>
+                                    </td>
+                                    <td class="text-truncate align-content-center">
+                                        @if (expert.ImagePath is null)
+                                        {
+                                            <img class="round" style="height:80px; width:65%" id="navbar-avatar" src="~/AdminTemplate/img/User/placeholder-male.jpg" alt="avatar" />
+                                        }
+                                        else
+                                        {
+                                            <img class="round" style="height:100px; width:50%" id="navbar-avatar" src="~/@expert.ImagePath" alt="avatar" />
+                                        }
                                     </td>
                                     <td class="text-truncate align-content-center">@expert.Name</td>
                                     <td class="text-truncate align-content-center">@expert.Email</td>
@@ -71,9 +88,6 @@
                             }
                         </tbody>
                     </table>
-                    <div class="col-12">
-                        <a class="btn btn-info btn-sm" asp-area="Admin" asp-action="Create" asp-controller="User"> افزودن کارشناس جدید </a>
-                    </div>
                 </div>
             </div>
         </div>

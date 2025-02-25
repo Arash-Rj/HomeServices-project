@@ -2,6 +2,7 @@
 using Src.Domain.Core.Base.Entities;
 using Src.Domain.Core.Expert_Manager.Expert.Dtos;
 using Src.Domain.Core.HomeServices_Manager.HomeServices;
+using Src.Domain.Core.HomeServices_Manager.HomeServices.Dtos;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Entities;
 using Src.Domain.Core.HomeServices_Manager.HomeServices.Repository;
 using Src.Infra.DataBase.SqlServer.Ef.DbContext;
@@ -94,18 +95,34 @@ namespace Src.Ifra.DataAccess.Repos.Ef.HomeServices_Manager.HomeServices
             return homeservicedtos;
         }
 
-        public async Task<List<SubCategory>> GetAllSubCategories(CancellationToken cancellationToken)
+        public async Task<List<SubcategoryDto>?> GetAllSubCategories(CancellationToken cancellationToken)
         {
-            var subcategories = new List<SubCategory>();
+            var subcategoryDtos = new List<SubcategoryDto>();
             try
             {
-                subcategories = await _appDbContext.SubCategories.ToListAsync(cancellationToken);
+                var subcategories = await _appDbContext.SubCategories
+                     .Select(s => new { s.ImagePath, s.Id, s.Category.Title, s.Name }).ToListAsync();
+                foreach (var sub in subcategories)
+                {
+                    var subcategoryDto = new SubcategoryDto()
+                    {
+                        Id = sub.Id,
+                        CategoryName = sub.Title,
+                        ImagePath = sub.ImagePath,
+                        Name = sub.Name,
+                    };
+                    subcategoryDtos.Add(subcategoryDto);
+                }
+            }
+            catch(NullReferenceException ex) 
+            {
+                return null;
             }
             catch (Exception ex)
             {
-                return subcategories;
+                throw ex;
             }
-            return subcategories;
+            return subcategoryDtos;
         }
 
         public async Task<HomeServiceDto?> GetInfo(int id, CancellationToken cancellationToken)
