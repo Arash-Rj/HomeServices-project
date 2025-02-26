@@ -30,7 +30,7 @@
                         </ul>
                       </li>
                 <li class="has-sub nav-item">
-                    <a><i class="icon-home"></i><span data-i18n="" class="menu-title">مدیریت سرویس ها</span></a>
+                    <a><i class="icon-drawer"></i><span data-i18n="" class="menu-title">مدیریت سرویس ها</span></a>
                     <ul class="menu-content">
                         <li>
                             <a asp-action="Index" asp-controller="Category" class="menu-item">دسته بندی ها</a>
@@ -46,7 +46,12 @@
                         <li class=" nav-item">
                             <a asp-action="Index" asp-controller="Request"><i class="icon-layers"></i><span data-i18n="" class="menu-title">سفارشات</span></a>
                         </li>
-
+                        <li class=" nav-item">
+                           <a asp-action="Index" asp-controller="Proposal"><i class="icon-bell"></i><span data-i18n="" class="menu-title">پیشنهادات</span></a>
+                        </li>
+                        <li class=" nav-item">
+                           <a asp-action="Index" asp-controller="FeedBack"><i class="icon-badge"></i><span data-i18n="" class="menu-title">بازخورد ها</span></a>
+                        </li>
                     </ul>
                 </div>
             </div>

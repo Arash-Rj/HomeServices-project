@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Src.Domain.Core.Expert_Manager.Expert.Entities;
+using Src.Domain.Core.Expert_Manager.Expert.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,7 @@ namespace Src.Infra.DataBase.SqlServer.Ef.Configuration
                     ExpertId = 3,
                     Description ="کار خیلی عالی و سر وقت انجام شد",
                     Score = 5,
+                    Status = FeedBackStatus.Pending
                 }
                 );
         } 

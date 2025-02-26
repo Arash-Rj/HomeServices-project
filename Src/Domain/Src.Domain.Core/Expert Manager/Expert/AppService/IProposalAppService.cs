@@ -14,6 +14,6 @@ namespace Src.Domain.Core.Expert_Manager.Expert.AppService
         public Task<Result> Update(ProposalInfoDto objct, CancellationToken cancellationToken);
         public Task<Result> Delete(int id, CancellationToken cancellationToken);
         public Task<ProposalInfoDto?> GetInfo(int id, CancellationToken cancellationToken);
-        public Task<List<ProposalInfoDto>?> GetAllInfo(CancellationToken cancellationToken);
+        public Task<List<ProposalInfoDto>?> GetAllInfo(CancellationToken cancellationToken, int id = 0);
     }
 }

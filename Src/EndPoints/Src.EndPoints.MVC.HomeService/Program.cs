@@ -5,6 +5,7 @@ using Src.Domain.AppService.AAM.ManageUser.Entities;
 using Src.Domain.AppService.Customer_Manager.Customer;
 using Src.Domain.AppService.Customer_Manager.Request;
 using Src.Domain.AppService.Expert_Manager.Expert;
+using Src.Domain.AppService.Expert_Manager.FeedBack;
 using Src.Domain.AppService.Expert_Manager.Proposal;
 using Src.Domain.AppService.Payment_Manager.Payment;
 using Src.Domain.AppService.Services_Manager.Category;
@@ -33,6 +34,7 @@ using Src.Domain.Service.AAM.ManageUser;
 using Src.Domain.Service.Customer_Manager.Customer;
 using Src.Domain.Service.Customer_Manager.Request;
 using Src.Domain.Service.Expert_Manager.Expert;
+using Src.Domain.Service.Expert_Manager.FeedBack;
 using Src.Domain.Service.Expert_Manager.Proposal;
 using Src.Domain.Service.HomeServices_Manager.HomeService;
 using Src.Domain.Service.Payment_Manager.Payment;
@@ -42,6 +44,7 @@ using Src.Ifra.DataAccess.Repos.Ef.AAM.ManageUser;
 using Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Customer;
 using Src.Ifra.DataAccess.Repos.Ef.Customer_Manager.Request;
 using Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.Expert;
+using Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.FeedBack;
 using Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.Proposal;
 using Src.Ifra.DataAccess.Repos.Ef.HomeServices_Manager.Category;
 using Src.Ifra.DataAccess.Repos.Ef.HomeServices_Manager.HomeServices;
@@ -103,6 +106,10 @@ builder.Services.AddScoped<IPaymentAppService, PaymentAppService>();
 builder.Services.AddScoped<ICategoryAppService, CategoryAppService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+builder.Services.AddScoped<IFeedBackAppService, FeedBackAppService>();
+builder.Services.AddScoped<IFeedBackService, FeedBackService>();
+builder.Services.AddScoped<IFeedBackRepository, FeedBackRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

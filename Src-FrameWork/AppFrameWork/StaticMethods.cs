@@ -41,7 +41,7 @@ namespace AppFrameWork
             {
                 fileName = Guid.NewGuid().ToString() +
                            ContentDispositionHeaderValue.Parse(FormFile.ContentDisposition).FileName.Trim('"');
-                    filePath = Path.Combine($"wwwroot/images/{folderName}", fileName);           
+                    filePath = Path.Combine($"wwwroot/Images/{folderName}", fileName);           
                 try
                 {
                     using (var stream = System.IO.File.Create(filePath))

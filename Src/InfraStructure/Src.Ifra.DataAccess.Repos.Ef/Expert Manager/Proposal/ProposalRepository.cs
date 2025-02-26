@@ -103,40 +103,76 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.Proposal
             return proposalinfo;
         }
 
-        public async Task<List<ProposalInfoDto>>? GetAllInfo(CancellationToken cancellationToken)
+        public async Task<List<ProposalInfoDto>>? GetAllInfo(CancellationToken cancellationToken,int id=0)
         {
             var proposaldtos = new List<ProposalInfoDto>();
             try
             {
-                var proposals = await _appDbContext.Proposals.Select(p =>
-                               new
-                               {
-                                   p.Id,
-                                   p.Request.HomeService.Title,
-                                   p.Description,
-                                   p.Price,
-                                   p.DueDate,
-                                   p.DueTime,
-                                   p.Expert.UserName,
-                                   p.ProposalDate,
-                                   p.Status
-                               })
-                     .ToListAsync(cancellationToken);
-                foreach (var proposal in proposals)
+                if (id == 0)
                 {
-                    proposaldtos.Add(
-                               new ProposalInfoDto
-                               {
-                                   Id = proposal.Id,
-                                   Description = proposal.Description,
-                                   DueDate = proposal.DueDate,
-                                   DueTime = proposal.DueTime,
-                                   ProposalDate = proposal.ProposalDate,
-                                   ExpertName = proposal.UserName,
-                                   Price = proposal.Price,
-                                   HomeServiceName = proposal.Title,
-                                   Status = proposal.Status,
-                               });
+                   var  proposals = await _appDbContext.Proposals.Select(p =>
+                                   new
+                                   {
+                                       p.Id,
+                                       p.Request.HomeService.Title,
+                                       p.Description,
+                                       p.Price,
+                                       p.DueDate,
+                                       p.DueTime,
+                                       p.Expert.UserName,
+                                       p.ProposalDate,
+                                       p.Status
+                                   })
+                         .ToListAsync(cancellationToken);
+                    foreach (var proposal in proposals)
+                    {
+                        proposaldtos.Add(
+                                   new ProposalInfoDto
+                                   {
+                                       Id = proposal.Id,
+                                       Description = proposal.Description,
+                                       DueDate = proposal.DueDate,
+                                       DueTime = proposal.DueTime,
+                                       ProposalDate = proposal.ProposalDate,
+                                       ExpertName = proposal.UserName,
+                                       Price = proposal.Price,
+                                       HomeServiceName = proposal.Title,
+                                       Status = proposal.Status,
+                                   });
+                    }
+                }
+                else
+                {
+                    var proposals = await _appDbContext.Proposals.Where(p => p.RequestId.Equals(id)).Select(p =>
+                                   new
+                                   {
+                                       p.Id,
+                                       p.Request.HomeService.Title,
+                                       p.Description,
+                                       p.Price,
+                                       p.DueDate,
+                                       p.DueTime,
+                                       p.Expert.UserName,
+                                       p.ProposalDate,
+                                       p.Status
+                                   })
+                         .ToListAsync(cancellationToken);
+                    foreach (var proposal in proposals)
+                    {
+                        proposaldtos.Add(
+                                   new ProposalInfoDto
+                                   {
+                                       Id = proposal.Id,
+                                       Description = proposal.Description,
+                                       DueDate = proposal.DueDate,
+                                       DueTime = proposal.DueTime,
+                                       ProposalDate = proposal.ProposalDate,
+                                       ExpertName = proposal.UserName,
+                                       Price = proposal.Price,
+                                       HomeServiceName = proposal.Title,
+                                       Status = proposal.Status,
+                                   });
+                    }
                 }
             }
             catch (NullReferenceException ex)
@@ -154,7 +190,7 @@ namespace Src.Ifra.DataAccess.Repos.Ef.Expert_Manager.Proposal
         {
             try
             {
-                var proposal = _appDbContext.Proposals.FirstOrDefault(r => r.Id.Equals(objct.Id));
+                var proposal = await _appDbContext.Proposals.FirstOrDefaultAsync(r => r.Id.Equals(objct.Id));
                 if (proposal == null)
                     return new Result(false, "پیشنهادی با این ایدی پیدا نشد!");
 

@@ -75,7 +75,7 @@ namespace Src.EndPoints.MVC.HomeService.Areas.Admin.Controllers
             displayServiecModel.Subcategories = subcategories;
             return View("/Areas/Admin/Views/Category/Sub-Category/Index.cshtml", displayServiecModel);
         }
-        [HttpPost]
+
         public async Task<IActionResult> Delete(int id,CancellationToken cancellationToken)
         {
             var result = await _categoryAppService.Delete(id,cancellationToken);

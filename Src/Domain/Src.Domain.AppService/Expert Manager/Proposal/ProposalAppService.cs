@@ -28,16 +28,12 @@ namespace Src.Domain.AppService.Expert_Manager.Proposal
             return await _proposalService.Delete(id, cancellationToken);
         }
 
-        public async Task<List<ProposalInfoDto>?> GetAllInfo(CancellationToken cancellationToken)
+        public async Task<List<ProposalInfoDto>?> GetAllInfo(CancellationToken cancellationToken, int id = 0)
         {
             var proposalInfoDtos = new List<ProposalInfoDto>();
             try
             {
-                proposalInfoDtos = await _proposalService.GetAllInfo(cancellationToken);
-                if (proposalInfoDtos is null)
-                {
-                    return null;
-                }
+                proposalInfoDtos = await _proposalService.GetAllInfo(cancellationToken,id);
             }
             catch (Exception ex)
             {
