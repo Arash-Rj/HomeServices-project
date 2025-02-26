@@ -16,7 +16,8 @@ namespace Src.Domain.Core.HomeServices_Manager.HomeServices.Service
         public Task<Result> Delete(int id, CancellationToken cancellationToken);
         public Task<HomeServiceDto?> GetInfo(int id, CancellationToken cancellationToken);
         public Task<Result> Validation(HomeService objct, CancellationToken cancellationToken);
-        public Task<List<HomeServiceDto>?> GetAllInfo(CancellationToken cancellationToken);
+        public Task<List<HomeServiceDto>?> GetAllInfo(CancellationToken cancellationToken, int subCategoryId = 0);
         public Task<List<SubcategoryDto>?> SubCategories(CancellationToken cancellationToken);
+        public Task<Result> CreateSubCategory(SubcategoryDto subcategory, CancellationToken cancellationToken);
     }
 }

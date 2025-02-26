@@ -40,7 +40,10 @@ namespace Src.Domain.AppService.Services_Manager.Category
                 categories = await _categoryService.GetAllInfo(cancellationToken);
                 foreach (var cat in categories)
                 {
-                    cat.ImagePath = "Images/Categories/" + cat.ImagePath;
+                    if(!cat.ImagePath.Contains("Images/Categories/"))
+                    {
+                        cat.ImagePath = "Images/Categories/" + cat.ImagePath;
+                    }
                 }
             }
             catch (Exception ex)
@@ -74,6 +77,13 @@ namespace Src.Domain.AppService.Services_Manager.Category
             try
             {
                subs = await _categoryService.GetSubs(id, cancellationToken);
+                foreach (var sub in subs)
+                {
+                    if (!sub.ImagePath.Contains("Images/Sub-Categories/"))
+                    {
+                        sub.ImagePath = "Images/Sub-Categories/" + sub.ImagePath;
+                    }
+                }
             }
             catch(Exception ex)
             {

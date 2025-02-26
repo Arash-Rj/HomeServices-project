@@ -26,17 +26,22 @@ namespace Src.Domain.Service.HomeServices_Manager.HomeService
             return await _homeServiceRepository.Create(objct, cancellationToken);
         }
 
+        public async Task<Result> CreateSubCategory(SubcategoryDto subcategory, CancellationToken cancellationToken)
+        {
+            return await _homeServiceRepository.CreateSubCategory(subcategory, cancellationToken);
+        }
+
         public async Task<Result> Delete(int id, CancellationToken cancellationToken)
         {
             return await _homeServiceRepository.Delete(id, cancellationToken);
         }
 
-        public async Task<List<HomeServiceDto>?> GetAllInfo(CancellationToken cancellationToken)
+        public async Task<List<HomeServiceDto>?> GetAllInfo(CancellationToken cancellationToken,int id = 0)
         {
             var homeservicedtos = new List<HomeServiceDto>();
             try
             {
-               homeservicedtos = await _homeServiceRepository.GetAllInfo(cancellationToken);
+               homeservicedtos = await _homeServiceRepository.GetAllInfo(cancellationToken,id);
                 if(homeservicedtos is null)
                 {
                     return null;

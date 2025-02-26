@@ -1,5 +1,5 @@
-﻿@using Src.Domain.Core.HomeServices_Manager.HomeServices.Dtos
-@model List<SubcategoryDto>
+﻿@using Src.EndPoints.MVC.HomeService.Areas.Admin.Models
+@model DisplayServiceModels
 @{
     ViewData["Title"] = "لیست زیر مجموعه ها";
 }
@@ -12,14 +12,22 @@
         </div>
         <div class="card-body collapse show">
             <div class="card-block card-dashboard">
+                @if (TempData["SuccessMessage"] is not null)
+                {
+                    <div id="alertbox" class="alert alert-success" role="alert">@TempData["SuccessMessage"]</div>
+                }
+                @if (TempData["ErrorMessage"] is not null)
+                {
+                    <div id="alertbox" class="alert alert-danger" role="alert">@TempData["ErrorMessage"]</div>
+                }
                 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#Create">
+                            افزودن زیرمجموعه جدید
+                        </button>
+                    </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="col-12">
-                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#Create">
-                                    افزودن زیرمجموعه جدید
-                                </button>
-                            </div>
                             <table class="table table-striped table-bordered dom-jQuery-events dataTable" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
                                 <thead>
                                     <tr role="row">
@@ -35,10 +43,13 @@
                                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="تاریخ شروع: activate to sort column ascending" style="width: 118.613px;">
                                             دسته بندی
                                         </th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="تاریخ شروع: activate to sort column ascending" style="width: 118.613px;">
+                                            عملیات
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var sub in Model)
+                                    @foreach (var sub in Model.Subcategories)
                                     {
                                         <tr role="row" class="odd">
                                             <td class="sorting_1">@sub.Id</td>
@@ -57,6 +68,9 @@
                                             </td>
                                             <td>
                                                 @sub.CategoryName
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-warning " asp-area="Admin" asp-action="Index" asp-controller="HomeService" asp-route-id="@sub.Id"> مشاهده سرویس ها </a>
                                             </td>
                                         </tr>
                                     }
@@ -81,6 +95,43 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade text-left" id="Create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel34" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myModalLabel34">اضافه کردن سرویس خانه جدید</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form enctype="multipart/form-data" asp-action="CreateSubCategory" method="post">
+                <div class="modal-body">
+                    <label>عنوان</label>
+                    <input asp-for="CreateSubCategoryModel.Title" type="text" id="projectinput3" class="form-control" required>
+                    <span class="text-danger m-3" asp-validation-for="@Model.CreateSubCategoryModel.Title"></span>
+                    <br />
+                    <label>انتخاب دسته بندی</label>
+                    <select asp-for="CreateSubCategoryModel.CategoryId" id="projectinput5" class="form-control" required>
+                        <option value="none" selected="" disabled="">انتخاب کنید</option>
+                        @foreach (var cat in Model.Categories)
+                        {
+                            <option value="@cat.Id">@cat.Title</option>
+                        }
+                    </select>
+                    <span class="text-danger m-3" asp-validation-for="@Model.CreateSubCategoryModel.CategoryId"></span>
+                    <br />
+                    <label>افزودن عکس</label>
+                    <input asp-for="CreateSubCategoryModel.ImageFile" type="file" class="form-control-file" id="projectinput7" required>
+                    <span class="text-danger m-3" asp-validation-for="@Model.CreateSubCategoryModel.ImageFile"></span>
+                </div>
+                <div class="modal-footer">
+                    <input type="reset" class="btn btn-danger btn-lg" data-dismiss="modal" value="بستن">
+                    <button type="submit" class="btn btn-outline-primary btn-lg">تایید</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

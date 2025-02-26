@@ -1,6 +1,6 @@
 ﻿@using AppFrameWork
 @using Src.EndPoints.MVC.HomeService.Areas.Admin.Models
-@model HomeServiceModel
+@model DisplayServiceModels
 @{
     ViewData["Title"] = "لیست سرویس های خانه";
 }
@@ -42,10 +42,10 @@
                                             عکس
                                         </th>
                                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="اداره: activate to sort column ascending" style="width: 104.525px;">
-                                            عنوان زیرمجموعه
+                                            عنوان
                                         </th>
                                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="سن: activate to sort column ascending" style="width: 56.7625px;">
-                                            عنوان
+                                            عنوان زیرمجموعه 
                                         </th>
                                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="تاریخ شروع: activate to sort column ascending" style="width: 118.613px;">
                                             وضعیت
@@ -53,10 +53,13 @@
                                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="حقوق: activate to sort column ascending" style="width: 132.812px;">
                                             قیمت پایه
                                         </th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="حقوق: activate to sort column ascending" style="width: 132.812px;">
+                                            عملیات
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach(var hom in Model.HomeServices)
+                                    @foreach(var hom in Model.HomeServiceModels)
                                     {
                                         <tr role="row" class="odd">
                                             <td class="sorting_1">@hom.Id</td>
@@ -70,8 +73,8 @@
                                                     <img style="height:100px; width:50%" id="navbar-avatar" src="~/Images/HomeServices/placeholder.jpg" alt="avatar" />
                                                 }
                                             </td>
-                                            <td>@hom.SubCategoryName</td>
                                             <td>@hom.Title</td>
+                                            <td>@hom.SubcategoryName</td>
                                             @if(hom.IsActive)
                                             {
                                                 <td>
@@ -85,6 +88,11 @@
                                                 </td>
                                             }
                                             <td>@StaticMethods.FormatStringInGroups(hom.BasePrice.ToString(), 3, true) تومان</td>
+                                            <td>
+                                                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#@hom.ImagePath.Substring(0, hom.Id)">
+                                                    ویرایش
+                                                </button>
+                                            </td>
                                         </tr>
                                     }
                                 </tbody>
@@ -94,19 +102,22 @@
                                             شناسه
                                         </th>
                                         <th rowspan="1" colspan="1">
-                                            عنوان
+                                             عکس
+                                        </th>
+                                        <th rowspan="1" colspan="1">
+                                            عنوان  
                                         </th>
                                         <th rowspan="1" colspan="1">
                                             عنوان زیرمجموعه
                                         </th>
                                         <th rowspan="1" colspan="1">
+                                            وضعیت
+                                         </th>
+                                        <th rowspan="1" colspan="1">
                                             قیمت پایه
                                         </th>
                                         <th rowspan="1" colspan="1">
-                                            عکس
-                                         </th>
-                                        <th rowspan="1" colspan="1">
-                                            وضعیت
+                                            عملیات
                                         </th>
                                     </tr>
                                 </tfoot>
@@ -155,6 +166,57 @@
         </div>
     </div>
 </div>
+
+
+@foreach(var hom in Model.HomeServiceModels)
+{
+    <div class="modal fade text-left" id="@hom.ImagePath.Substring(0,hom.Id)" tabindex="-1" role="dialog" aria-labelledby="myModalLabel34" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="myModalLabel34">ویرایش سرویس خانه </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <form enctype="multipart/form-data" asp-controller="HomeService" asp-action="Update" method="post">
+                    <div class="modal-body">
+                        <label>عنوان</label>
+                        <input asp-for="@hom.Title" type="text" id="projectinput3" class="form-control" required name="Title">
+                        <label>قیمت پایه(تومان)</label>
+                        <input asp-for="@hom.BasePrice" type="text" id="priceinput" class="form-control" required name="BasePrice">
+                        <label>توضیحات</label>
+                        <textarea asp-for="@hom.Description" id="userinput8" rows="4" class="form-control border-primary" required name="Description"></textarea>
+                        <span class="text-danger m-3" asp-validation-for="@hom.Description"></span>
+                        <label>انتخاب زیر مجموعه</label>
+                        <select asp-for="@hom.SubcategoryId" id="projectinput5" class="form-control" required name="SubCategoryId">
+                            <option value="none" selected="" disabled=""></option>
+                            @foreach (var sub in Model.Subcategories)
+                            {
+                                <option value="@sub.Id">@sub.Name</option>
+                            }
+                        </select>
+                        <label>وضعیت</label>
+                        <select asp-for="@hom.IsActive" id="projectinput5" class="form-control" required name="IsActive">
+                            <option value="none" selected="" disabled="">انتخاب کنید</option>
+                                <option value="true">فعال</option>
+                            <option value="false">غیرفعال</option>
+                        </select>
+                        <label> عکس</label>
+                        <input asp-for="@hom.ImageFile" type="file" class="form-control-file" id="projectinput7" name="ImageFile">
+                        <input asp-for="@hom.ImagePath" type="text" class="form-control-file" id="projectinput7" name="ImagePath" hidden>
+                        <input asp-for="@hom.Id" type="text" class="form-control-file" id="projectinput7" name="Id" hidden>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="reset" class="btn btn-danger btn-lg" data-dismiss="modal" value="بستن">
+                        <button type="submit" class="btn btn-outline-primary btn-lg">تایید</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
 <script>
     document.getElementById('priceinput').addEventListener('input',function(e){
         let value = e.target.value.replace(/[^0-9]/g,'');

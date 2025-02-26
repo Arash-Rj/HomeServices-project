@@ -22,7 +22,7 @@ namespace Src.Infra.DataBase.SqlServer.Ef.Configuration
 
             builder.HasMany(s => s.AppExperts).WithMany(e => e.Specialties);
 
-
+            builder.Property(x => x.Name).HasMaxLength(30);
 
             builder.HasData(new List<SubCategory>()
             {

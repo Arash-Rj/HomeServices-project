@@ -45,6 +45,26 @@ namespace Src.Ifra.DataAccess.Repos.Ef.HomeServices_Manager.HomeServices
             return new Result(true, "ثبت سرویس خانه با موفقیت انجام شد.");
         }
 
+        public async Task<Result> CreateSubCategory(SubcategoryDto subcategoryDto, CancellationToken cancellationToken)
+        {
+            var subCategory = new SubCategory()
+            {
+                Name = subcategoryDto.Name,
+                ImagePath = subcategoryDto.ImagePath,
+                CategoryId = subcategoryDto.CategoryId,
+            };
+            try
+            {
+                await _appDbContext.SubCategories.AddAsync(subCategory, cancellationToken);
+                var res = await _appDbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return new Result(false, ex.Message);
+            }
+            return new Result(true, "ثبت زیر مجموعه با موفقیت انجام شد.");
+        }
+
         public async Task<Result> Delete(int id, CancellationToken cancellationToken)
         {
             try
@@ -62,26 +82,49 @@ namespace Src.Ifra.DataAccess.Repos.Ef.HomeServices_Manager.HomeServices
             return new Result(true, "حذف سرویس خانه با موفقیت انجام شد.");
         }
 
-        public async Task<List<HomeServiceDto>?> GetAllInfo(CancellationToken cancellationToken)
+        public async Task<List<HomeServiceDto>?> GetAllInfo(CancellationToken cancellationToken, int id = 0)
         {
             var homeservicedtos = new List<HomeServiceDto>();
             try
             {
-               var homeservices = await _appDbContext.HomeServices.Select(
-                    h => new {h.Id, h.BasePrice, h.ImagePath , h.SubCategory.Name , h.IsActive ,h.Title }
+                if (id == 0)
+                {
+                    var homeservices = await _appDbContext.HomeServices.Select(
+                      h => new { h.Id, h.BasePrice, h.ImagePath, h.SubCategory.Name, h.IsActive, h.Title, h.Description }
                     )
                     .ToListAsync(cancellationToken);
-                foreach ( var homeservice in homeservices )
-                {
-                    homeservicedtos.Add(new HomeServiceDto() 
+                    foreach (var homeservice in homeservices)
                     {
-                        Id = homeservice.Id,
-                        BasePrice = homeservice.BasePrice,
-                        ImagePath = homeservice.ImagePath,
-                        Title = homeservice.Title,
-                        IsActive = homeservice.IsActive,
-                        SubCategoryName = homeservice.Name,                   
-                    });
+                        homeservicedtos.Add(new HomeServiceDto()
+                        {
+                            Id = homeservice.Id,
+                            BasePrice = homeservice.BasePrice,
+                            ImagePath = homeservice.ImagePath,
+                            Title = homeservice.Title,
+                            IsActive = homeservice.IsActive,
+                            SubCategoryName = homeservice.Name,
+                            Description = homeservice.Description
+                        });
+                    }
+                }
+                else
+                {
+                    var homeservices = await _appDbContext.HomeServices.Where(h => h.SubCategoryId.Equals(id)).Select(
+                         h => new { h.Id, h.BasePrice, h.ImagePath, h.SubCategory.Name, h.IsActive, h.Title }
+                    )
+                    .ToListAsync(cancellationToken);
+                    foreach (var homeservice in homeservices)
+                    {
+                        homeservicedtos.Add(new HomeServiceDto()
+                        {
+                            Id = homeservice.Id,
+                            BasePrice = homeservice.BasePrice,
+                            ImagePath = homeservice.ImagePath,
+                            Title = homeservice.Title,
+                            IsActive = homeservice.IsActive,
+                            SubCategoryName = homeservice.Name,
+                        });
+                    }
                 }
             }
             catch (NullReferenceException ex)

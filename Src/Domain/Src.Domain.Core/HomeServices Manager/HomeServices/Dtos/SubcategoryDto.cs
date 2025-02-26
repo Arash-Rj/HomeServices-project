@@ -12,5 +12,6 @@ namespace Src.Domain.Core.HomeServices_Manager.HomeServices.Dtos
        public string Name { get; set; }
         public string CategoryName { get; set; }
         public string ImagePath { get; set; }
+        public int CategoryId { get; set; }
     }
 }
