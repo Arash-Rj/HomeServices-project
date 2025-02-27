@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Src.Domain.Core.AAM.ManageUser.AppService;
 using Src.EndPoints.MVC.HomeService.Areas.Admin.Models;
 using Src.EndPoints.MVC.HomeService.Models;
+using System.Diagnostics;
 
 namespace Src.EndPoints.MVC.HomeService.Areas.Admin.Controllers
 {
@@ -16,6 +17,13 @@ namespace Src.EndPoints.MVC.HomeService.Areas.Admin.Controllers
             _userAppService = userAppService;
         }
         public IActionResult Index()
+        {
+            return View();
+        }
+        [Route("/Admin/Error")]
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
         {
             return View();
         }
